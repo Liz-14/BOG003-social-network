@@ -1,15 +1,25 @@
-import { templateRegister } from '.view/template-register.js'
+import { templateRegister } from './view/template-register.js'
+import { templateHome } from './view/template-home.js'
+
+console.log(templateRegister())
+console.log(templateHome())
+
+document.getElementById('s-container').appendChild(templateHome())
+const sectionContainer = document.getElementById('s-container')
 
 export const router = (hash) => {
+  sectionContainer.innerHTML = ''
   switch (hash) {
     case '#/':
-      return console.log('home')
+      sectionContainer.appendChild(templateHome())
+      break
 
     case '#/Loguin':
-      return console.log('Loguin')
+      console.log('Loguin')
+      break
 
     case '#/Register':
-      return console.log('Register')
+      return sectionContainer.appendChild(templateRegister())
 
     default:
       return console.log('error 404')
