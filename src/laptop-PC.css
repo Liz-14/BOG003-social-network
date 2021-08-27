@@ -4,8 +4,10 @@
     background-image: url(./img/backgroundPC1.png);
   }
 
-  #s-container{
+  main{
     width: 30vw;
+    padding: 3% 0%;
+    margin: 16% 0%;
   }
 
   #img-rabbit{
@@ -37,8 +39,8 @@ h2{
 /* ---------- PC 1920 x 1080 ---------- */
 
 @media(min-width:1600px){
-  #s-container{
-    margin: 40% 0%;
+  main{
+    margin: 10.5% 0%;
   }
 
   h2{
