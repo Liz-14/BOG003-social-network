@@ -12,4 +12,5 @@ window.addEventListener('hashchange', () => {
   router(window.location.hash)
 })
 
+
 // document.getElementById('s-container').innerHTML = templateRegister()
