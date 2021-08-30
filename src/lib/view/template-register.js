@@ -1,4 +1,4 @@
-import {loguinGoogle} from '../index.js'
+import { loguinGoogle, emailPass } from '../index.js'
 
 export const templateRegister = () => {
   const register = `
@@ -19,8 +19,11 @@ export const templateRegister = () => {
   divSection.id = 'c-container'
   divSection.innerHTML = register
 
-  const btnG = divSection.querySelector("#btn-g");
-  btnG.addEventListener("click", () => { loguinGoogle()})
+  const btnG = divSection.querySelector('#btn-g')
+  btnG.addEventListener('click', () => { loguinGoogle() })
+
+  const btnSingUp = divSection.querySelector('#btn-signup')
+  btnSingUp.addEventListener('click', emailPass)
 
   return divSection
 }
