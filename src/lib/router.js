@@ -2,6 +2,8 @@ import { templateRegister } from './view/template-register.js'
 import { templateHome } from './view/template-home.js'
 import { templateLogin } from './view/template-loguin.js'
 
+// al recargar la pagina cambia el hash
+location.hash = '#/'
 document.getElementById('s-container').appendChild(templateHome())
 const sectionContainer = document.getElementById('s-container')
 
