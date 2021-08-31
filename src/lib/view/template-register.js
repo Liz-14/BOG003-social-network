@@ -3,7 +3,7 @@ import { loguinGoogle, emailPass } from '../index.js'
 export const templateRegister = () => {
   const register = `
       <h2 class="background-title">Register</h2>
-      <input type="text" class="input-register" placeholder="name">
+      <p id="error"></p>
       <input type="email" class="input-register" placeholder="email">
       <input type="email" class="input-register" placeholder="check email">
       <input type="password" class="input-register" placeholder="password">
@@ -18,12 +18,16 @@ export const templateRegister = () => {
   const divSection = document.createElement('div')
   divSection.id = 'c-container'
   divSection.innerHTML = register
+  
 
   const btnG = divSection.querySelector('#btn-g')
   btnG.addEventListener('click', () => { loguinGoogle() })
 
   const btnSingUp = divSection.querySelector('#btn-signup')
-  btnSingUp.addEventListener('click', emailPass)
+  btnSingUp.addEventListener('click',(e) => {
+    e.preventDefault(); 
+    emailPass();
+  })
 
   return divSection
 }
