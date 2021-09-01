@@ -4,6 +4,7 @@ export const templateRegister = () => {
   const register = `
       <h2 class="background-title">Register</h2>
       <p id="error"></p>
+      <input type="text" class="input-register" placeholder="name">
       <input type="email" class="input-register" placeholder="email">
       <input type="email" class="input-register" placeholder="check email">
       <input type="password" class="input-register" placeholder="password">
