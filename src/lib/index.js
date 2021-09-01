@@ -34,10 +34,10 @@ export const loguinGoogle = () => {
 }
 
 export const emailPass = () => {
-  const email1 = document.getElementsByClassName('input-register')[0].value
-  const password1 = document.getElementsByClassName('input-register')[2].value
-  const email2 = document.getElementsByClassName('input-register')[1].value
-  const password2 = document.getElementsByClassName('input-register')[3].value
+  const email1 = document.getElementsByClassName('input-register')[1].value
+  const password1 = document.getElementsByClassName('input-register')[3].value
+  const email2 = document.getElementsByClassName('input-register')[2].value
+  const password2 = document.getElementsByClassName('input-register')[4].value
   const passRules = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{6,16}$/.test(password1)
 
   const errorP = document.getElementById('error-p')
@@ -70,11 +70,23 @@ export const emailPass = () => {
   }
 }
 
-const register = (email, password) => {
+const register = (email, password, names) => {
   firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Signed in
-      const user = userCredential.user
+      userCredential.user.updateProfile({
+        displayName: names
+      })
+
+      const configuration = {
+        url: 'http://localhost:5000/#/'
+      }
+
+      userCredential.user.sendEmailVerification(configuration)
+        .catch(error => {
+          const errorMessage = error.message
+          alert(errorMessage)
+        })
       // ...
     })
     .catch((error) => {
