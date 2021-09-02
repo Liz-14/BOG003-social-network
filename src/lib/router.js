@@ -4,7 +4,6 @@ import { templateLogin } from './view/template-loguin.js'
 
 // al recargar la pagina cambia el hash
 location.hash = '#/'
-
 const sectionContainer = document.getElementById('s-container')
 sectionContainer.appendChild(templateHome())
 
