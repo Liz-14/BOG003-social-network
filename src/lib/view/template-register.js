@@ -1,13 +1,14 @@
-import { loguinGoogle, register } from '../fireFunctions.js'
+import { logOut, loguinGoogle, register } from '../fireFunctions.js'
 
 export const templateRegister = () => {
-  const register = `
+  const registerT = `
       <h2 class="background-title">Register</h2>
-      <input type="text" class="input-register" placeholder="name">
+      <input type="text" id = "user-name" class="input-register" placeholder="name">
       <input type="email" class="input-register" placeholder="email">
       <input type="email" class="input-register" placeholder="check email">
       <input type="password" class="input-register" placeholder="password" id = "password">
       <input type="password" class="input-register" placeholder="check password">
+      <p id="verification-email">Revisa tu correo para ingresar</p>
       <p id="fire-error" class="error"></p>
       <p id="error-p" class="error"></p>
       <p id="rules">La contraseña debe tener entre 6 y 16 caracteres, al menos
@@ -21,11 +22,12 @@ export const templateRegister = () => {
 
   const divSection = document.createElement('div')
   divSection.id = 'c-container'
-  divSection.innerHTML = register
+  divSection.innerHTML = registerT
 
   // ----- CONTROL DE ERRORES ----- //
   const emailPass = () => {
     const errorP = divSection.querySelector('#error-p')
+    const name = divSection.querySelector('#user-name').value
     const email1 = divSection.getElementsByClassName('input-register')[1].value
     const password1 = divSection.getElementsByClassName('input-register')[3].value
     const email2 = divSection.getElementsByClassName('input-register')[2].value
@@ -43,6 +45,31 @@ export const templateRegister = () => {
         // Verificacion igualdad en la informacion de los input email-password
         if (email1 === email2 && password1 === password2) {
           register(email1, password1)
+          .then((userCredential) => {
+            // Signed in
+            userCredential.user.updateProfile({
+              displayName: name
+            }).then(()=>{
+      
+              const configuration = {
+                url: 'http://localhost:5000/#/'
+              }
+              userCredential.user.sendEmailVerification(configuration)
+            })
+          })
+          .then(()=>{
+            logOut()
+          })
+          .catch((error) => {
+            const errorCode = error.code
+            const errorMessage = error.message
+            // location.hash = '#/Register'
+            // alert(errorMessage)
+            const fireError = document.getElementById('fire-error')
+            fireError.textContent = errorMessage
+            fireError.style.display = 'block'
+            setTimeout(() => { fireError.style.display = 'none' }, 6000)
+          })
         } else {
           if (email1 !== email2) {
             errorP.style.display = 'block'
@@ -67,13 +94,41 @@ export const templateRegister = () => {
   // -------  EVENTOS ------- //
 
   const btnG = divSection.querySelector('#btn-g')
-  btnG.addEventListener('click', () => { loguinGoogle() })
+  btnG.addEventListener('click', () => { 
+    loguinGoogle() 
+    .then((result) => {
+      /** @type {firebase.auth.OAuthCredential} */
+      const credential = result.credential
+
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const token = credential.accessToken
+      // The signed-in user info.
+      const user = result.user
+      console.log('user', user)
+      // ...
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code
+      const errorMessage = error.message
+      // The email of the user's account used.
+      const email = error.email
+      console.log('email', email)
+      // The firebase.auth.AuthCredential type that was used.
+      const credential = error.credential
+      console.log('error', errorMessage)
+      // ...
+    })
+  
+  })
 
   const btnSingUp = divSection.querySelector('#btn-signup')
   btnSingUp.addEventListener('click', (e) => {
+    //location.hash = "#/"
     // cancela evento que viene por defecto
     e.preventDefault()
     emailPass()
+    document.getElementById("verification-email").style.display = "block"
+
   })
 
   const inputPass = divSection.querySelector('#password')

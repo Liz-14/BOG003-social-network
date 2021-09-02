@@ -149,3 +149,8 @@ a {
   background-color: rgba(255, 34, 34, 0.5);
   display: none;
 }
+
+#verification-email{
+    display: none;
+    background-color:rgba(76, 175, 80, 0.8);
+}
