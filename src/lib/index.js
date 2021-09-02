@@ -34,6 +34,7 @@ export const loguinGoogle = () => {
 }
 
 export const emailPass = () => {
+  const name = document.getElementsByClassName('input-register')[0].value
   const email1 = document.getElementsByClassName('input-register')[1].value
   const password1 = document.getElementsByClassName('input-register')[3].value
   const email2 = document.getElementsByClassName('input-register')[2].value
@@ -49,7 +50,7 @@ export const emailPass = () => {
   } else {
     if (passRules) {
       if (email1 === email2 && password1 === password2) {
-        register(email1, password1)
+        register(email1, password1, name)
       } else {
         if (email1 !== email2) {
           errorP.style.display = 'block'
@@ -83,10 +84,10 @@ const register = (email, password, names) => {
       }
 
       userCredential.user.sendEmailVerification(configuration)
-        .catch(error => {
-          const errorMessage = error.message
-          alert(errorMessage)
-        })
+        //.catch(error => {
+          //const errorMessage = error.message
+          //alert(errorMessage)
+       // })
       // ...
     })
     .catch((error) => {
