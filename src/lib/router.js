@@ -23,7 +23,7 @@ export const router = (hash) => {
       return sectionContainer.appendChild(templateRegister())
 
     case '#/Wall':
-      document.getElementById('p-container').removeChild(initialContainer)
+      initialContainer.style.display = 'none'
       document.getElementById('p-container').appendChild(templateWall())
       break
 

@@ -1,19 +1,21 @@
+import { logOut } from '../fireFunctions.js'
+
 export const templateWall = () => {
   const wall = `
-      <h2 class="background-title">Login</h2>
-      <input type="email" class="input-register" placeholder="email">
-      <input type="password" class="input-register" placeholder="password" id = "password">
-      <p id="fire-error" class="error"></p>
-      <button type="button" id="btn-signup" class="btn-p"><a href="#/">Sign In</a></button>
-      <button type="button" class="btn-p" id="btn-g">
-        <img src="img/logo_google.png" alt="" id="logo-google">
-        <a href="#/">Sign In</a>
-      </button>
-      <button type="button" class="btn-s"> <a href="#/Register">Register</a></button>`
+  <header>
+    <button type="button" id="btn-logout"><a href="#/"><img src="img/btnLogout.png" alt="logo" id="img-logout"></a></button>
+    <a href="#/" id = "a-logo"><img src="img/Logo.png" alt="logo" id="logo-w"></a>`
 
   const sectionW = document.createElement('section')
   sectionW.id = 'w-container'
   sectionW.innerHTML = wall
+
+  const btnLogout = sectionW.querySelector('#btn-logout')
+  btnLogout.addEventListener('click', () => {
+    sectionW.style.display = 'none'
+    document.querySelector('#initial-container').style.display = 'block'
+    logOut()
+  })
 
   return sectionW
 }

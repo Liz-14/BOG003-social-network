@@ -18,11 +18,15 @@ body{
 }
 
 main{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-image: url(./img/background2.png);
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  width: 100%;
 }
 
 #initial-container{
@@ -36,7 +40,7 @@ main{
     position: relative;
     padding: 5% 0%;
     width: 75vw;
-    display: none;
+    /*display: none;*/
 }
 /* -------------------- Contenedor Principal ----------------------*/
 #c-container{
@@ -159,10 +163,37 @@ a {
     background-color:rgba(76, 175, 80, 0.8);
 }
 
+#w-container{
+
+  width: 100%
+}
+
 #w-container header{
+  display: flex;
+  justify-content: space-between;
   background-image: url(./img/backHeader.png);
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+#a-logo{
+
+  margin-right: 5%;
+}
+
+#logo-w{
+  width: 60vw;
+  padding: 5%;
+}
+
+#btn-logout{
+  margin-left: 6%;
+    background: transparent;
+    border: none;
+}
+
+#img-logout{
+  width: 20vw;
 }

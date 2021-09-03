@@ -16,7 +16,7 @@ export const templateRegister = () => {
       <button type="button" id="btn-signup" class="btn-p"><a href="#/">Sign Up</a></button>
       <button type="button" class="btn-p" id="btn-g">
         <img src="img/logo_google.png" alt="" id="logo-google">
-        <a href="#/">Sign Up</a>
+        <a href="#/Wall">Sign Up</a>
       </button>
       <button type="button" class="btn-s"> <a href="#/Login">login</a></button>`
 
@@ -98,6 +98,7 @@ export const templateRegister = () => {
 
   const btnG = divSection.querySelector('#btn-g')
   btnG.addEventListener('click', () => {
+    // location.hash = '#/Wall'
     loginGoogle()
       .then((result) => {
       /** @type {firebase.auth.OAuthCredential} */
@@ -107,7 +108,7 @@ export const templateRegister = () => {
         const token = credential.accessToken
         // The signed-in user info.
         const user = result.user
-        // console.log('user', user)
+        console.log('user', user)
       // ...
       }).catch((error) => {
       // Handle Errors here.

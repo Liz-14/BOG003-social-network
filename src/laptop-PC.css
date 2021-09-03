@@ -1,6 +1,6 @@
 /* ---------- Laptop 1440 x 900 ---------- */
 @media(min-width:414px){
-  body{
+  main{
     background-image: url(./img/backgroundPC1.png);
   }
 
