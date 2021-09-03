@@ -4,7 +4,7 @@
     background-image: url(./img/backgroundPC1.png);
   }
 
-  main{
+  #initial-container{
     width: 30vw;
     padding: 3% 0%;
     margin: 16% 0%;
@@ -42,7 +42,7 @@ h2{
 /* ---------- PC 1920 x 1080 ---------- */
 
 @media(min-width:1600px){
-  main{
+  #initial-container{
     margin: 10.5% 0%;
   }
 

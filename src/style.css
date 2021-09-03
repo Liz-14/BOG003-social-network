@@ -11,11 +11,6 @@ html{
 
 body{
   background-color: #FFBB5D;
-  background-image: url(./img/background2.png);
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   position: relative;
   display: flex;
   align-items: center;
@@ -23,6 +18,14 @@ body{
 }
 
 main{
+  background-image: url(./img/background2.png);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#initial-container{
     height: auto;
     text-align: center;
     background-color: white;
@@ -33,6 +36,7 @@ main{
     position: relative;
     padding: 5% 0%;
     width: 75vw;
+    display: none;
 }
 /* -------------------- Contenedor Principal ----------------------*/
 #c-container{
@@ -153,4 +157,12 @@ a {
 #verification-email{
     display: none;
     background-color:rgba(76, 175, 80, 0.8);
+}
+
+#w-container header{
+  background-image: url(./img/backHeader.png);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
