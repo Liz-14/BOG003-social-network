@@ -11,11 +11,6 @@ html{
 
 body{
   background-color: #FFBB5D;
-  background-image: url(./img/background2.png);
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   position: relative;
   display: flex;
   align-items: center;
@@ -23,6 +18,18 @@ body{
 }
 
 main{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url(./img/background2.png);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+}
+
+#initial-container{
     height: auto;
     text-align: center;
     background-color: white;
@@ -33,6 +40,7 @@ main{
     position: relative;
     padding: 5% 0%;
     width: 75vw;
+    /*display: none;*/
 }
 /* -------------------- Contenedor Principal ----------------------*/
 #c-container{
@@ -148,4 +156,122 @@ a {
 .error{
   background-color: rgba(255, 34, 34, 0.5);
   display: none;
+}
+
+#verification-email{
+    display: none;
+    background-color:rgba(76, 175, 80, 0.8);
+}
+
+#w-container{
+  background-image: url(./img/backWall.png);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+#w-container header{
+  padding-bottom: 1%;
+  width: 100%;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  background-image: url(./img/backHeader.png);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#a-logo{
+
+  margin-right: 5%;
+}
+
+#logo-w{
+  width: 60vw;
+  padding: 5%;
+}
+
+#btn-logout{
+  margin-top: 5%;
+  margin-left: 7%;
+  padding: 2% 3%;
+  background: linear-gradient(90deg, #FFBB5D 0%, #E88E48 65.36%, #FF824F 100%);
+  height: 7vh;
+  border: 2px solid #333333;
+  border-radius: 8px;
+}
+
+#img-logout{
+  width: 12vw;
+}
+
+#w-container nav{
+  background-image: url(./img/backNavWall.png);
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+#w-container ul{
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+}
+
+#w-container li{
+  list-style: none;
+}
+
+.img-btn-nav{
+  width: 12vw;
+}
+
+#btn-publish, #btn-home, #btn-perfil{
+  border: none;
+}
+
+#btn-home{
+  padding: 20%;
+  border-radius: 40px;
+  margin-top: 20%;
+  margin-bottom: 30%;
+}
+
+#btn-publish{
+  position: absolute;
+  padding: 2.5%;
+  border-radius: 40px;
+  right: 41vw;
+  bottom: 5vh;
+}
+
+#btn-perfil{
+  border-radius: 40px;
+  margin-top: 15%;
+  margin-bottom: 0%;
+}
+
+#img-perfil{
+  width: 16.8vw;
+}
+
+.btn-nav{
+  padding: 15%;
+  border-radius: 40px;
+  margin-top: 20%;
+  margin-bottom: 20%;
+}
+
+.btn-perfil{
+  border-radius: 40px;
+  border: none;
 }
