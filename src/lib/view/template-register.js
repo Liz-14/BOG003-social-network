@@ -1,4 +1,4 @@
-import { logOut, loguinGoogle, register } from '../fireFunctions.js'
+import { logOut, loginGoogle, register } from '../fireFunctions.js'
 
 export const templateRegister = () => {
   const registerT = `
@@ -16,15 +16,15 @@ export const templateRegister = () => {
       <button type="button" id="btn-signup" class="btn-p"><a href="#/">Sign Up</a></button>
       <button type="button" class="btn-p" id="btn-g">
         <img src="img/logo_google.png" alt="" id="logo-google">
-        <a href="#/">Sign Up</a>
+        <a href="#/Wall">Sign Up</a>
       </button>
-      <button type="button" class="btn-s"> <a href="#/Loguin">Loguin</a></button>`
+      <button type="button" class="btn-s"> <a href="#/Login">login</a></button>`
 
   const divSection = document.createElement('div')
   divSection.id = 'c-container'
   divSection.innerHTML = registerT
 
-  // ----- CONTROL DE ERRORES ----- //
+  // ------------------------ CONTROL DE ERRORES ------------------------- //
   const emailPass = () => {
     const errorP = divSection.querySelector('#error-p')
     const name = divSection.querySelector('#user-name').value
@@ -37,7 +37,7 @@ export const templateRegister = () => {
     // Verificacion campos vacios
     if (email1 === '' || email2 === '' || password1 === '' || password2 === '') {
       errorP.style.display = 'block'
-      errorP.textContent = 'Hay campos vacios'
+      errorP.textContent = 'Complete the empty fields. '
       setTimeout(() => { errorP.style.display = 'none' }, 3500)
     } else {
       // Control de condiciones de la contraseña
@@ -45,46 +45,49 @@ export const templateRegister = () => {
         // Verificacion igualdad en la informacion de los input email-password
         if (email1 === email2 && password1 === password2) {
           register(email1, password1)
-          .then((userCredential) => {
+            .then((userCredential) => {
             // Signed in
-            userCredential.user.updateProfile({
-              displayName: name
-            }).then(()=>{
-      
-              const configuration = {
-                url: 'http://localhost:5000/#/'
-              }
-              userCredential.user.sendEmailVerification(configuration)
+              userCredential.user.updateProfile({
+                displayName: name
+              }).then(() => {
+                const configuration = {
+                  url: 'http://localhost:5000/#/'
+                }
+                userCredential.user.sendEmailVerification(configuration)
+              })
             })
-          })
-          .then(()=>{
-            logOut()
-          })
-          .catch((error) => {
-            const errorCode = error.code
-            const errorMessage = error.message
-            // location.hash = '#/Register'
-            // alert(errorMessage)
-            const fireError = document.getElementById('fire-error')
-            fireError.textContent = errorMessage
-            fireError.style.display = 'block'
-            setTimeout(() => { fireError.style.display = 'none' }, 6000)
-          })
+            .then(() => {
+              logOut()
+            })
+            .then(() => {
+              document.getElementById('verification-email').style.display = 'block'
+              setTimeout(() => { location.hash = '#/' }, 5000)
+            })
+            .catch((error) => {
+              const errorCode = error.code
+              const errorMessage = error.message
+              // location.hash = '#/Register'
+              // alert(errorMessage)
+              const fireError = document.getElementById('fire-error')
+              fireError.textContent = errorMessage
+              fireError.style.display = 'block'
+              setTimeout(() => { fireError.style.display = 'none' }, 6000)
+            })
         } else {
           if (email1 !== email2) {
             errorP.style.display = 'block'
-            errorP.textContent = 'El email y su confirmacion deben coincidir'
+            errorP.textContent = 'The email fields must match'
             setTimeout(() => { errorP.style.display = 'none' }, 4500)
           }
           if (password1 !== password2) {
-            errorP.textContent = 'La contraseña y su confirmacion deben coincidir'
+            errorP.textContent = ' The password fields must match'
             errorP.style.display = 'block'
             setTimeout(() => { errorP.style.display = 'none' }, 4500)
           }
         }
         // condiciones de la contraseña no se cumplen
       } else {
-        errorP.textContent = 'Contraseña incorrecta'
+        errorP.textContent = 'Invalid password'
         errorP.style.display = 'block'
         setTimeout(() => { errorP.style.display = 'none' }, 3500)
       }
@@ -94,41 +97,38 @@ export const templateRegister = () => {
   // -------  EVENTOS ------- //
 
   const btnG = divSection.querySelector('#btn-g')
-  btnG.addEventListener('click', () => { 
-    loguinGoogle() 
-    .then((result) => {
+  btnG.addEventListener('click', () => {
+    // location.hash = '#/Wall'
+    loginGoogle()
+      .then((result) => {
       /** @type {firebase.auth.OAuthCredential} */
-      const credential = result.credential
+        const credential = result.credential
 
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      const token = credential.accessToken
-      // The signed-in user info.
-      const user = result.user
-      console.log('user', user)
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const token = credential.accessToken
+        // The signed-in user info.
+        const user = result.user
+        console.log('user', user)
       // ...
-    }).catch((error) => {
+      }).catch((error) => {
       // Handle Errors here.
-      const errorCode = error.code
-      const errorMessage = error.message
-      // The email of the user's account used.
-      const email = error.email
-      console.log('email', email)
-      // The firebase.auth.AuthCredential type that was used.
-      const credential = error.credential
-      console.log('error', errorMessage)
+        const errorCode = error.code
+        const errorMessage = error.message
+        // The email of the user's account used.
+        const email = error.email
+        console.log('email', email)
+        // The firebase.auth.AuthCredential type that was used.
+        const credential = error.credential
+        console.log('error', errorMessage)
       // ...
-    })
-  
+      })
   })
 
   const btnSingUp = divSection.querySelector('#btn-signup')
   btnSingUp.addEventListener('click', (e) => {
-    //location.hash = "#/"
     // cancela evento que viene por defecto
     e.preventDefault()
     emailPass()
-    document.getElementById("verification-email").style.display = "block"
-
   })
 
   const inputPass = divSection.querySelector('#password')
