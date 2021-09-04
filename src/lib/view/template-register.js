@@ -1,4 +1,4 @@
-import { logOut, loginGoogle, register } from '../fireFunctions.js'
+import { logOut, loginGoogle, register } from '../firebase/fireFunctions.js'
 
 export const templateRegister = () => {
   const registerT = `
@@ -16,7 +16,7 @@ export const templateRegister = () => {
       <button type="button" id="btn-signup" class="btn-p"><a href="#/">Sign Up</a></button>
       <button type="button" class="btn-p" id="btn-g">
         <img src="img/logo_google.png" alt="" id="logo-google">
-        <a href="#/Wall">Sign Up</a>
+        <a href="">Sign Up</a>
       </button>
       <button type="button" class="btn-s"> <a href="#/Login">login</a></button>`
 
@@ -66,8 +66,7 @@ export const templateRegister = () => {
             .catch((error) => {
               const errorCode = error.code
               const errorMessage = error.message
-              // location.hash = '#/Register'
-              // alert(errorMessage)
+
               const fireError = document.getElementById('fire-error')
               fireError.textContent = errorMessage
               fireError.style.display = 'block'
@@ -97,8 +96,8 @@ export const templateRegister = () => {
   // -------  EVENTOS ------- //
 
   const btnG = divSection.querySelector('#btn-g')
-  btnG.addEventListener('click', () => {
-    // location.hash = '#/Wall'
+  btnG.addEventListener('click', (e) => {
+    e.preventDefault()
     loginGoogle()
       .then((result) => {
       /** @type {firebase.auth.OAuthCredential} */
@@ -109,6 +108,7 @@ export const templateRegister = () => {
         // The signed-in user info.
         const user = result.user
         console.log('user', user)
+        location.hash = '#/Wall'
       // ...
       }).catch((error) => {
       // Handle Errors here.
@@ -120,6 +120,11 @@ export const templateRegister = () => {
         // The firebase.auth.AuthCredential type that was used.
         const credential = error.credential
         console.log('error', errorMessage)
+
+        const fireError = document.getElementById('fire-error')
+        fireError.textContent = errorMessage
+        fireError.style.display = 'block'
+        setTimeout(() => { fireError.style.display = 'none' }, 6000)
       // ...
       })
   })

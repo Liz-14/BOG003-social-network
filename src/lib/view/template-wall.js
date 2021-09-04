@@ -1,4 +1,4 @@
-import { logOut } from '../fireFunctions.js'
+import { logOut } from '../firebase/fireFunctions.js'
 
 export const templateWall = () => {
   const wall = `
@@ -6,6 +6,8 @@ export const templateWall = () => {
     <button type="button" id="btn-logout"><a href="#/"><img src="img/btnLogout.png" alt="logo" id="img-logout"></a></button>
     <a href="#/" id = "a-logo"><img src="img/Logo.png" alt="logo" id="logo-w"></a>
   </header>
+
+  <h2 id="log-verification"></h2>
 
   <nav>
     <ul>
@@ -19,6 +21,16 @@ export const templateWall = () => {
   const sectionW = document.createElement('section')
   sectionW.id = 'w-container'
   sectionW.innerHTML = wall
+
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      const displayName = user.displayName
+      const uid = user.uid
+      sectionW.querySelector('#log-verification').textContent = 'Toy logeado' + displayName
+    } else {
+      sectionW.querySelector('#log-verification').textContent = 'No toy logeado'
+    }
+  })
 
   const btnLogout = sectionW.querySelector('#btn-logout')
   btnLogout.addEventListener('click', () => {
