@@ -23,7 +23,6 @@ export const templateLogin = () => {
 
     login(email, pass)
       .then((userCredential) => {
-        location.hash = '#/Wall'
         const user = userCredential.user
         // ...
       })
@@ -40,6 +39,18 @@ export const templateLogin = () => {
   divLogin.querySelector('#btn-signup').addEventListener('click', (e) => {
     e.preventDefault()
     signIn()
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        if (user.emailVerified) {
+          location.hash = '#/Wall'
+        } else {
+          const fireError = document.getElementById('fire-error')
+          fireError.textContent = 'Invalid email. Check your inbox email'
+          fireError.style.display = 'block'
+          setTimeout(() => { fireError.style.display = 'none' }, 6000)
+        }
+      }
+    })
   })
 
   const btnG = divLogin.querySelector('#btn-g')
@@ -63,10 +74,10 @@ export const templateLogin = () => {
         const errorMessage = error.message
         // The email of the user's account used.
         const email = error.email
-        console.log('email', email)
+        console.error('email', email)
         // The firebase.auth.AuthCredential type that was used.
         const credential = error.credential
-        console.log('error', errorMessage)
+        console.error('error', errorMessage)
 
         const fireError = document.getElementById('fire-error')
         fireError.textContent = errorMessage
