@@ -13,6 +13,8 @@ export const templateHome = () => {
 }
 
 /*
+<button type="button" class="btn-p"> <a href="#/Wall">Wall</a></button>
+
 <section id = "initial-container">
   <header>
     <img src="img/MobileRabbit.png" alt="rabbit" id="img-rabbit">

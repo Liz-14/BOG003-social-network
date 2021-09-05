@@ -7,6 +7,8 @@ export const templateWall = () => {
     <a href="#/" id = "a-logo"><img src="img/Logo.png" alt="logo" id="logo-w"></a>
   </header>
 
+
+
   <nav id = "mobile-nav">
     <ul>
       <li> <button type="button" id="btn-home"> <a href="#"> <img src="img/home.png" alt="logo" class="img-btn-nav"> </a> </button> </li>
@@ -27,11 +29,21 @@ export const templateWall = () => {
       </ul>
     </nav>
   </header>
+  <h2 class = "v-log"></h2>
   `
 
   const sectionW = document.createElement('section')
   sectionW.id = 'w-container'
   sectionW.innerHTML = wall
+
+  // ----------------------  TEMPORALES ------------------------------------
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      document.querySelector('.v-log').textContent = `Toy logueado ${user.displayName}`
+    } else {
+      document.querySelector('.v-log').textContent = 'No toy logueado'
+    }
+  })
 
   const btnLogoutMobile = sectionW.querySelector('#btn-logout-mobile')
   btnLogoutMobile.addEventListener('click', () => {
@@ -46,6 +58,6 @@ export const templateWall = () => {
     document.querySelector('#initial-container').style.display = 'block'
     logOut()
   })
-
+  // ----------------------------------------------------------------------------
   return sectionW
 }
