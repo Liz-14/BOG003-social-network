@@ -174,7 +174,7 @@ a {
   position: relative;
 }
 
-#w-container header{
+#mobile-header{
   padding-bottom: 1%;
   width: 100%;
   position: fixed;
@@ -197,7 +197,7 @@ a {
   padding: 5%;
 }
 
-#btn-logout{
+.btn-logout{
   margin-top: 5%;
   margin-left: 7%;
   padding: 2% 3%;
@@ -211,7 +211,7 @@ a {
   width: 12vw;
 }
 
-#w-container nav{
+#mobile-nav{
   background-image: url(./img/backNavWall.png);
   background-size: cover;
   background-position: center;
@@ -237,6 +237,7 @@ a {
 
 #btn-publish, #btn-home, #btn-perfil{
   border: none;
+  opacity: 0;
 }
 
 #btn-home{
@@ -274,4 +275,7 @@ a {
 .btn-perfil{
   border-radius: 40px;
   border: none;
+}
+#pc-header, #pc-nav{
+  display: none;
 }

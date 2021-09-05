@@ -37,6 +37,83 @@ h2{
   #c-container p{
     font-size: 1.4rem;
   }
+
+  #mobile-header, #mobile-nav{
+    display: none;
+  }
+
+  #w-container{
+    background-image: none;
+  }
+
+  #pc-header{
+    background-image: url(./img/backPC.png);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1%;
+    padding-bottom: 2.5%;
+  }
+
+  #pc-nav{
+    display: block;
+    flex-grow: 0.9;
+    background-color: rgba(64, 1, 1, 0.7);
+    padding: 0.8% 0%;
+    border-top-right-radius: 70px;
+    border-bottom-right-radius: 70px;
+    max-width: 38vw;
+  }
+
+  #a-logo{
+    margin: 0;
+    margin-right: 2%;
+  }
+
+  #logo-w{
+    width: 30vw;
+  }
+
+  .btn-logout{
+    margin: 0;
+    margin-left: 15%;
+    padding: 0.5% 1%;
+    height: auto;
+  }
+
+  #img-logout{
+    width: 4.5vw;
+  }
+
+  #w-container ul{
+    justify-content: space-evenly;
+  }
+
+  .img-btn-nav{
+    width: 4vw;
+  }
+
+  #btn-publish-pc, #btn-home-pc, #btn-perfil-pc{
+    padding: 20%;
+    border: none;
+    border-radius: 60px;
+    opacity: 0;
+  }
+
+  #img-perfil{
+    width: 5.5vw;
+  }
+
+  #btn-perfil-pc{
+    padding: 0;
+  }
+
+
 }
 
 /* ---------- PC 1920 x 1080 ---------- */
@@ -55,5 +132,34 @@ h2{
   }
   #c-container p{
     font-size: 1.6rem;
+  }
+
+  #pc-header{
+    padding: 0;
+    padding-bottom: 1.4%;
+  }
+
+  #logo-w{
+    width: 25vw;
+  }
+
+  #a-logo{
+    margin-right: 7%;
+  }
+
+  #img-logout{
+    width: 3.5vw;
+  }
+
+  .btn-logout{
+    padding: 0.3% 0.7%;
+    height: auto;
+  }
+
+  .img-btn-nav{
+    width: 3vw;
+  }
+#img-perfil{
+    width: 4.2vw;
   }
 }
