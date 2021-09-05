@@ -4,7 +4,7 @@ export const templateWall = () => {
   const wall = `
   <header id = "mobile-header">
     <button type="button" class = "btn-logout" id="btn-logout-mobile"><a href="#/"><img src="img/btnLogout.png" alt="logo" id="img-logout"></a></button>
-    <a href="#/" id = "a-logo"><img src="img/Logo.png" alt="logo" id="logo-w"></a>
+    <a href="" id = "a-logo"><img src="img/Logo.png" alt="logo" id="logo-w"></a>
   </header>
 
 
@@ -19,7 +19,7 @@ export const templateWall = () => {
 
   <header id = "pc-header">
     <a href="#/" id = "a-logo"><img src="img/Logo.png" alt="logo" id="logo-w"></a>
-    <button type="button" class = "btn-logout" id="btn-logout-pc"><a href="#/"><img src="img/btnLogout.png" alt="logo" id="img-logout"></a></button>
+    <button type="button" class = "btn-logout" id="btn-logout-pc"><a href=""><img src="img/btnLogout.png" alt="logo" id="img-logout"></a></button>
 
     <nav id = "pc-nav">
       <ul>
@@ -47,16 +47,30 @@ export const templateWall = () => {
 
   const btnLogoutMobile = sectionW.querySelector('#btn-logout-mobile')
   btnLogoutMobile.addEventListener('click', () => {
-    sectionW.style.display = 'none'
-    document.querySelector('#initial-container').style.display = 'block'
+    document.querySelector('#p-container').innerHTML = ''
+    const initalSection = document.createElement('section')
+    initalSection.id = 'initial-container'
+    const sContainer = document.createElement('div')
+    sContainer.id = 's-container'
+    document.querySelector('#p-container').appendChild(initalSection)
+    document.querySelector('#initial-container').appendChild(sContainer)
+    // document.querySelector('#initial-container').style.display = 'block'
     logOut()
+    location.hash = '#/'
   })
 
   const btnLogoutPC = sectionW.querySelector('#btn-logout-pc')
   btnLogoutPC.addEventListener('click', () => {
-    sectionW.style.display = 'none'
-    document.querySelector('#initial-container').style.display = 'block'
+    document.querySelector('#p-container').innerHTML = ''
+    const initalSection = document.createElement('section')
+    initalSection.id = 'initial-container'
+    const sContainer = document.createElement('div')
+    sContainer.id = 's-container'
+    document.querySelector('#p-container').appendChild(initalSection)
+    document.querySelector('#initial-container').appendChild(sContainer)
+    // document.querySelector('#initial-container').style.display = 'block'
     logOut()
+    location.hash = '#/'
   })
   // ----------------------------------------------------------------------------
   return sectionW

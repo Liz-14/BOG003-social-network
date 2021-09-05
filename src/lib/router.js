@@ -10,7 +10,6 @@ const sectionContainer = document.getElementById('s-container')
 sectionContainer.appendChild(templateHome())
 
 export const router = (hash) => {
-  const main = document.getElementById('p-container')
   sectionContainer.innerHTML = ''
   switch (hash) {
     case '#/':
@@ -23,7 +22,8 @@ export const router = (hash) => {
       return sectionContainer.appendChild(templateRegister())
 
     case '#/Wall':
-      initialContainer.style.display = 'none'
+      // initialContainer.style.display = 'none'
+      document.getElementById('p-container').innerHTML = ''
       document.getElementById('p-container').appendChild(templateWall())
       break
 
