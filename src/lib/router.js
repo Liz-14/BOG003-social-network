@@ -6,25 +6,28 @@ import { templateWall } from './view/template-wall.js'
 // al recargar la pagina cambia el hash
 location.hash = '#/'
 const initialContainer = document.getElementById('initial-container')
-const sectionContainer = document.getElementById('s-container')
-sectionContainer.appendChild(templateHome())
+const wallContainer = document.getElementById('w-section')
+initialContainer.appendChild(templateHome())
 
 export const router = (hash) => {
-  const main = document.getElementById('p-container')
-  sectionContainer.innerHTML = ''
+  initialContainer.innerHTML = ''
   switch (hash) {
     case '#/':
-      return sectionContainer.appendChild(templateHome())
+      wallContainer.innerHTML = ''
+      wallContainer.style.display = 'none'
+      initialContainer.appendChild(templateHome())
+      break
 
     case '#/Login':
-      return sectionContainer.appendChild(templateLogin())
+      return initialContainer.appendChild(templateLogin())
 
     case '#/Register':
-      return sectionContainer.appendChild(templateRegister())
+      return initialContainer.appendChild(templateRegister())
 
     case '#/Wall':
+      document.querySelector('#w-section').style.display = 'block'
       initialContainer.style.display = 'none'
-      document.getElementById('p-container').appendChild(templateWall())
+      wallContainer.appendChild(templateWall())
       break
 
     default:

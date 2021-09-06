@@ -26,7 +26,7 @@ main{
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  width: 100%;
+  width: 100vw;
 }
 
 #initial-container{
@@ -163,12 +163,24 @@ a {
     background-color:rgba(76, 175, 80, 0.8);
 }
 
-#w-container{
-
-  width: 100%
+#w-section{
+  display: none;
+  width: 100vw;
 }
 
-#w-container header{
+#w-container{
+  background-image: url(./img/backWall.png);
+  background-attachment: fixed;
+  background-size: cover;
+  width: 100vw;
+  min-height: 100vh;
+  position: relative;
+}
+
+#mobile-header{
+  padding-bottom: 1%;
+  width: 100vw;
+  position: fixed;
   display: flex;
   justify-content: space-between;
   background-image: url(./img/backHeader.png);
@@ -178,22 +190,99 @@ a {
   background-size: cover;
 }
 
-#a-logo{
-
-  margin-right: 5%;
-}
-
 #logo-w{
   width: 60vw;
-  padding: 5%;
+  padding-bottom: 3%;
+  margin-top: 2%;
+  margin-right: 3%;
 }
 
-#btn-logout{
-  margin-left: 6%;
-    background: transparent;
-    border: none;
+.btn-logout{
+  margin-top: 5%;
+  margin-left: 7%;
+  padding: 2% 3%;
+  background: linear-gradient(90deg, #FFBB5D 0%, #E88E48 65.36%, #FF824F 100%);
+  height: 7vh;
+  border: 2px solid #333333;
+  border-radius: 8px;
 }
 
 #img-logout{
-  width: 20vw;
+  width: 12vw;
+}
+
+#mobile-nav{
+  background-image: url(./img/backNavWall.png);
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+#w-container ul{
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+}
+
+#w-container li{
+  list-style: none;
+}
+
+.img-btn-nav{
+  width: 12vw;
+}
+
+#btn-publish, #btn-home, #btn-perfil{
+  border: none;
+  opacity: 0;
+}
+
+#btn-home{
+  padding: 20%;
+  border-radius: 40px;
+  margin-top: 20%;
+  margin-bottom: 30%;
+}
+
+#btn-publish{
+  position: absolute;
+  padding: 2.5%;
+  border-radius: 40px;
+  right: 41vw;
+  bottom: 5vh;
+}
+
+#btn-perfil{
+  border-radius: 40px;
+  margin-top: 15%;
+  margin-bottom: 0%;
+}
+
+#img-perfil{
+  width: 16.8vw;
+}
+
+.btn-nav{
+  padding: 15%;
+  border-radius: 40px;
+  margin-top: 20%;
+  margin-bottom: 20%;
+}
+
+.btn-perfil{
+  border-radius: 40px;
+  border: none;
+}
+#pc-header, #pc-nav{
+  display: none;
+}
+
+/*---BORRAR------*/
+.v-log{
+  position: fixed;
+  margin-top: 30%;
+  text-align: center;
 }

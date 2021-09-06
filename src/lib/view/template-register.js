@@ -1,24 +1,28 @@
-import { logOut, loginGoogle, register } from '../fireFunctions.js'
+import { logOut, loginGoogle, register } from '../firebase/fireFunctions.js'
 
 export const templateRegister = () => {
   const registerT = `
-      <h2 class="background-title">Register</h2>
-      <input type="text" id = "user-name" class="input-register" placeholder="name">
-      <input type="email" class="input-register" placeholder="email">
-      <input type="email" class="input-register" placeholder="check email">
-      <input type="password" class="input-register" placeholder="password" id = "password">
-      <input type="password" class="input-register" placeholder="check password">
-      <p id="verification-email">Revisa tu correo para ingresar</p>
-      <p id="fire-error" class="error"></p>
-      <p id="error-p" class="error"></p>
-      <p id="rules">La contraseña debe tener entre 6 y 16 caracteres, al menos
-      un dígito, una minúscula y una mayúscula. Puede tener otros símbolos.</p>
-      <button type="button" id="btn-signup" class="btn-p"><a href="#/">Sign Up</a></button>
-      <button type="button" class="btn-p" id="btn-g">
-        <img src="img/logo_google.png" alt="" id="logo-google">
-        <a href="#/Wall">Sign Up</a>
-      </button>
-      <button type="button" class="btn-s"> <a href="#/Login">login</a></button>`
+    <header>
+      <img src="img/MobileRabbit.png" alt="rabbit" id="img-rabbit">
+      <a href="#/"><img src="img/Logo.png" alt="logo" id="logo"></a>
+    </header>
+    <h2 class="background-title">Register</h2>
+    <input type="text" id = "user-name" class="input-register" placeholder="name">
+    <input type="email" class="input-register" placeholder="email">
+    <input type="email" class="input-register" placeholder="check email">
+    <input type="password" class="input-register" placeholder="password" id = "password">
+    <input type="password" class="input-register" placeholder="check password">
+    <p id="verification-email">Revisa tu correo para ingresar</p>
+    <p id="fire-error" class="error"></p>
+    <p id="error-p" class="error"></p>
+    <p id="rules">La contraseña debe tener entre 6 y 16 caracteres, al menos
+    un dígito, una minúscula y una mayúscula. Puede tener otros símbolos.</p>
+    <button type="button" id="btn-signup" class="btn-p"><a href="#/">Sign Up</a></button>
+    <button type="button" class="btn-p" id="btn-g">
+      <img src="img/logo_google.png" alt="" id="logo-google">
+      <a href="">Sign Up</a>
+    </button>
+    <button type="button" class="btn-s"> <a href="#/Login">login</a></button>`
 
   const divSection = document.createElement('div')
   divSection.id = 'c-container'
@@ -51,7 +55,7 @@ export const templateRegister = () => {
                 displayName: name
               }).then(() => {
                 const configuration = {
-                  url: 'http://localhost:5000/#/'
+                  url: 'https://liz-14.github.io/BOG003-social-network/src/#/'
                 }
                 userCredential.user.sendEmailVerification(configuration)
               })
@@ -66,8 +70,7 @@ export const templateRegister = () => {
             .catch((error) => {
               const errorCode = error.code
               const errorMessage = error.message
-              // location.hash = '#/Register'
-              // alert(errorMessage)
+
               const fireError = document.getElementById('fire-error')
               fireError.textContent = errorMessage
               fireError.style.display = 'block'
@@ -97,8 +100,8 @@ export const templateRegister = () => {
   // -------  EVENTOS ------- //
 
   const btnG = divSection.querySelector('#btn-g')
-  btnG.addEventListener('click', () => {
-    // location.hash = '#/Wall'
+  btnG.addEventListener('click', (e) => {
+    e.preventDefault()
     loginGoogle()
       .then((result) => {
       /** @type {firebase.auth.OAuthCredential} */
@@ -109,6 +112,7 @@ export const templateRegister = () => {
         // The signed-in user info.
         const user = result.user
         console.log('user', user)
+        location.hash = '#/Wall'
       // ...
       }).catch((error) => {
       // Handle Errors here.
@@ -120,6 +124,11 @@ export const templateRegister = () => {
         // The firebase.auth.AuthCredential type that was used.
         const credential = error.credential
         console.log('error', errorMessage)
+
+        const fireError = document.getElementById('fire-error')
+        fireError.textContent = errorMessage
+        fireError.style.display = 'block'
+        setTimeout(() => { fireError.style.display = 'none' }, 6000)
       // ...
       })
   })

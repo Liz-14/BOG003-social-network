@@ -1,21 +1,62 @@
-import { logOut } from '../fireFunctions.js'
+import { logOut } from '../firebase/fireFunctions.js'
 
 export const templateWall = () => {
   const wall = `
-  <header>
-    <button type="button" id="btn-logout"><a href="#/"><img src="img/btnLogout.png" alt="logo" id="img-logout"></a></button>
-    <a href="#/" id = "a-logo"><img src="img/Logo.png" alt="logo" id="logo-w"></a>`
+  <header id = "mobile-header">
+    <button type="button" class = "btn-logout" id="btn-logout-mobile"><a href="#/"><img src="img/btnLogout.png" alt="logo" id="img-logout"></a></button>
+    <img src="img/Logo.png" alt="logo" id="logo-w">
+  </header>
 
-  const sectionW = document.createElement('section')
-  sectionW.id = 'w-container'
-  sectionW.innerHTML = wall
+  <nav id = "mobile-nav">
+    <ul>
+      <li> <button type="button" id="btn-home"> <a href="#"> <img src="img/home.png" alt="logo" class="img-btn-nav"> </a> </button> </li>
+      <li> <button type="button" id="btn-publish"> <a href="#"> <img src="img/publish.png" alt="logo" class="img-btn-nav"> </a> </button> </li>
+      <li> <button type="button" id="btn-perfil"> <a href="#"> <img src="img/perfil.png" alt="logo" class="img-btn-nav" id="img-perfil"> </a> </button> </li>
+    </ul>
+  </nav>
 
-  const btnLogout = sectionW.querySelector('#btn-logout')
-  btnLogout.addEventListener('click', () => {
-    sectionW.style.display = 'none'
-    document.querySelector('#initial-container').style.display = 'block'
-    logOut()
+  <header id = "pc-header">
+    <img src="img/Logo.png" alt="logo" id="logo-w">
+    <button type="button" class = "btn-logout" id="btn-logout-pc"><a href=""><img src="img/btnLogout.png" alt="logo" id="img-logout"></a></button>
+
+    <nav id = "pc-nav">
+      <ul>
+        <li> <button type="button" id="btn-home-pc"> <a href="#"> <img src="img/home.png" alt="logo" class="img-btn-nav"> </a> </button> </li>
+        <li> <button type="button" id="btn-publish-pc"> <a href="#"> <img src="img/publish.png" alt="logo" class="img-btn-nav"> </a> </button> </li>
+        <li> <button type="button" id="btn-perfil-pc"> <a href="#"> <img src="img/perfil.png" alt="logo" class="img-btn-nav" id="img-perfil"> </a> </button> </li>
+      </ul>
+    </nav>
+  </header>
+
+  <h2 class = "v-log"></h2>
+  `
+
+  const divW = document.createElement('div')
+  divW.id = 'w-container'
+  divW.innerHTML = wall
+
+  // ----------------------  TEMPORALES ------------------------------------
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      document.querySelector('.v-log').textContent = `Toy logueado ${user.displayName}`
+    } else {
+      document.querySelector('.v-log').textContent = 'No toy logueado'
+    }
   })
 
-  return sectionW
+  const btnLogoutMobile = divW.querySelector('#btn-logout-mobile')
+  btnLogoutMobile.addEventListener('click', () => {
+    document.querySelector('#initial-container').style.display = 'block'
+    logOut()
+    location.hash = '#/'
+  })
+
+  const btnLogoutPC = divW.querySelector('#btn-logout-pc')
+  btnLogoutPC.addEventListener('click', () => {
+    document.querySelector('#initial-container').style.display = 'block'
+    logOut()
+    location.hash = '#/'
+  })
+  // ----------------------------------------------------------------------------
+  return divW
 }
