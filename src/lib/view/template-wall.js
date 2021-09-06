@@ -4,10 +4,8 @@ export const templateWall = () => {
   const wall = `
   <header id = "mobile-header">
     <button type="button" class = "btn-logout" id="btn-logout-mobile"><a href="#/"><img src="img/btnLogout.png" alt="logo" id="img-logout"></a></button>
-    <a href="" id = "a-logo"><img src="img/Logo.png" alt="logo" id="logo-w"></a>
+    <img src="img/Logo.png" alt="logo" id="logo-w">
   </header>
-
-
 
   <nav id = "mobile-nav">
     <ul>
@@ -18,7 +16,7 @@ export const templateWall = () => {
   </nav>
 
   <header id = "pc-header">
-    <a href="#/" id = "a-logo"><img src="img/Logo.png" alt="logo" id="logo-w"></a>
+    <img src="img/Logo.png" alt="logo" id="logo-w">
     <button type="button" class = "btn-logout" id="btn-logout-pc"><a href=""><img src="img/btnLogout.png" alt="logo" id="img-logout"></a></button>
 
     <nav id = "pc-nav">
@@ -29,12 +27,13 @@ export const templateWall = () => {
       </ul>
     </nav>
   </header>
+
   <h2 class = "v-log"></h2>
   `
 
-  const sectionW = document.createElement('section')
-  sectionW.id = 'w-container'
-  sectionW.innerHTML = wall
+  const divW = document.createElement('div')
+  divW.id = 'w-container'
+  divW.innerHTML = wall
 
   // ----------------------  TEMPORALES ------------------------------------
   firebase.auth().onAuthStateChanged((user) => {
@@ -45,33 +44,19 @@ export const templateWall = () => {
     }
   })
 
-  const btnLogoutMobile = sectionW.querySelector('#btn-logout-mobile')
+  const btnLogoutMobile = divW.querySelector('#btn-logout-mobile')
   btnLogoutMobile.addEventListener('click', () => {
-    document.querySelector('#p-container').innerHTML = ''
-    const initalSection = document.createElement('section')
-    initalSection.id = 'initial-container'
-    const sContainer = document.createElement('div')
-    sContainer.id = 's-container'
-    document.querySelector('#p-container').appendChild(initalSection)
-    document.querySelector('#initial-container').appendChild(sContainer)
-    // document.querySelector('#initial-container').style.display = 'block'
+    document.querySelector('#initial-container').style.display = 'block'
     logOut()
     location.hash = '#/'
   })
 
-  const btnLogoutPC = sectionW.querySelector('#btn-logout-pc')
+  const btnLogoutPC = divW.querySelector('#btn-logout-pc')
   btnLogoutPC.addEventListener('click', () => {
-    document.querySelector('#p-container').innerHTML = ''
-    const initalSection = document.createElement('section')
-    initalSection.id = 'initial-container'
-    const sContainer = document.createElement('div')
-    sContainer.id = 's-container'
-    document.querySelector('#p-container').appendChild(initalSection)
-    document.querySelector('#initial-container').appendChild(sContainer)
-    // document.querySelector('#initial-container').style.display = 'block'
+    document.querySelector('#initial-container').style.display = 'block'
     logOut()
     location.hash = '#/'
   })
   // ----------------------------------------------------------------------------
-  return sectionW
+  return divW
 }

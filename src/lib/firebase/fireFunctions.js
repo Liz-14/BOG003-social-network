@@ -13,11 +13,5 @@ export const login = (email, password) => {
 }
 
 export const logOut = () => {
-  firebase.auth().signOut()
-    .then(() => {
-      console.log('salir')
-    })
-    .catch((error) => {
-      console.error(error)
-    })
+  return firebase.auth().signOut()
 }

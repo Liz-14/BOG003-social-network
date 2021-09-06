@@ -2,6 +2,7 @@
 @media(min-width:414px){
   main{
     background-image: url(./img/backgroundPC1.png);
+    padding-bottom: 1.6%
   }
 
   #initial-container{
@@ -50,7 +51,6 @@ h2{
     background-image: url(./img/backPC.png);
     background-attachment: fixed;
     background-position: center;
-    background-repeat: no-repeat;
     background-size: cover;
     display: flex;
     flex-direction: row-reverse;
@@ -58,6 +58,8 @@ h2{
     align-items: center;
     padding-top: 1%;
     padding-bottom: 2.5%;
+    position: fixed;
+    width: 100vw;
   }
 
   #pc-nav{
@@ -70,13 +72,10 @@ h2{
     max-width: 38vw;
   }
 
-  #a-logo{
-    margin: 0;
-    margin-right: 2%;
-  }
-
   #logo-w{
-    width: 30vw;
+    margin-right: 5%;
+    margin-top: 1%;
+    width: 28vw;
   }
 
   .btn-logout{
@@ -119,6 +118,10 @@ h2{
 /* ---------- PC 1920 x 1080 ---------- */
 
 @media(min-width:1600px){
+  main{
+    padding-bottom: 0.7%
+  }
+
   #initial-container{
     margin: 10.5% 0%;
   }
@@ -140,11 +143,9 @@ h2{
   }
 
   #logo-w{
-    width: 25vw;
-  }
-
-  #a-logo{
-    margin-right: 7%;
+    margin-top: 0.8%;
+    margin-right: 8%;
+    width: 22vw;
   }
 
   #img-logout{

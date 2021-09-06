@@ -26,7 +26,7 @@ main{
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  width: 100%;
+  width: 100vw;
 }
 
 #initial-container{
@@ -163,20 +163,23 @@ a {
     background-color:rgba(76, 175, 80, 0.8);
 }
 
+#w-section{
+  display: none;
+  width: 100vw;
+}
+
 #w-container{
   background-image: url(./img/backWall.png);
   background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
   background-size: cover;
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
   position: relative;
 }
 
 #mobile-header{
   padding-bottom: 1%;
-  width: 100%;
+  width: 100vw;
   position: fixed;
   display: flex;
   justify-content: space-between;
@@ -187,14 +190,11 @@ a {
   background-size: cover;
 }
 
-#a-logo{
-
-  margin-right: 5%;
-}
-
 #logo-w{
   width: 60vw;
-  padding: 5%;
+  padding-bottom: 3%;
+  margin-top: 2%;
+  margin-right: 3%;
 }
 
 .btn-logout{
@@ -282,6 +282,7 @@ a {
 
 /*---BORRAR------*/
 .v-log{
+  position: fixed;
   margin-top: 30%;
   text-align: center;
 }
