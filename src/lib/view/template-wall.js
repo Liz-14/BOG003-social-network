@@ -1,4 +1,5 @@
 import { logOut } from '../firebase/fireFunctions.js'
+import firebase from 'firebase'
 
 export const templateWall = () => {
   const wall = `
@@ -33,7 +34,7 @@ export const templateWall = () => {
 
   <section id ="posts">
   <div class="container-posts">
-    <h2 class = "user-name-post">Camila</h2>
+    <h2 id = "pet-name" class = "user-name-post"></h2>
     <p class = "user-text-post"></p>
     <ul>
         <li> <button type="button" id="btn-like"> <a href="#"> <img src="img/like.png" alt="logo" class="img-btn-wall"> </a> </button> </li>
@@ -51,11 +52,13 @@ export const templateWall = () => {
   // ----------------------  TEMPORALES ------------------------------------
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      document.querySelector('.v-log').textContent = `Toy logueado ${user.displayName}`
+      document.querySelector('.user-name-post').textContent = `${user.displayName}`
     } else {
-      document.querySelector('.v-log').textContent = 'No toy logueado'
+      document.querySelector('.user-name-post').textContent = 'No toy logueado'
     }
   })
+
+
 
   const btnLogoutMobile = divW.querySelector('#btn-logout-mobile')
   btnLogoutMobile.addEventListener('click', () => {

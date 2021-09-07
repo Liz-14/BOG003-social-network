@@ -1,5 +1,6 @@
 import { login, loginGoogle } from '../firebase/fireFunctions.js'
-//import { firebaseApp } from '../config.js'
+import firebase from 'firebase'
+
 
 export const templateLogin = () => {
   const loginT = `

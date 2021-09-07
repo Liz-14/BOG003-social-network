@@ -1,3 +1,5 @@
+import firebase from 'firebase'
+
 export const firebaseConfig = {
   apiKey: 'AIzaSyBiUCDyTgk8igwITCE12MNBgPcRX9vZR7c',
   authDomain: 'petbook-eb24e.firebaseapp.com',
