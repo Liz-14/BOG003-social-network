@@ -1,5 +1,5 @@
 import { logOut } from '../firebase/fireFunctions.js'
-import firebase from 'firebase'
+// import firebase from 'firebase'
 
 export const templateWall = () => {
   const wall = `
@@ -50,11 +50,45 @@ export const templateWall = () => {
   divW.innerHTML = wall
 
   // ----------------------  TEMPORALES ------------------------------------
+
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      document.querySelector('.user-name-post').textContent = `${user.displayName}`
+      const userEmail = user.email
+      if (userEmail.includes('gmail')) {
+        const divPetName = document.createElement('div')
+        divPetName.id = 'div-pet-name'
+        divW.appendChild(divPetName)
+        const petName = document.createElement('input')
+        petName.type = 'text'
+        petName.placeholder = 'Pet Name'
+        petName.id = 'pet-input'
+        petName.className = 'input-register'
+        divPetName.appendChild(petName)
+        const btnPetName = document.createElement('button')
+        btnPetName.id = 'btn-pet-name'
+        btnPetName.textContent = 'Enviar'
+        btnPetName.className = 'btn-p'
+        divPetName.appendChild(btnPetName)
+
+        document.getElementById('btn-pet-name').addEventListener('click', () => {
+          const valuePetName = document.getElementById('pet-input').value
+          const changeUser = firebase.auth().currentUser
+          document.getElementById('w-container').removeChild(document.getElementById('div-pet-name'))
+
+          changeUser.updateProfile({
+            displayName: valuePetName
+          }).then(() => {
+            document.querySelector('.v-log').textContent = `${user.displayName} ta logueado :3`
+          }).catch((error) => {
+            console.error(error.message)
+          })
+        })
+      }
+      document.querySelector('.user-name-post').textContent = `${user.displayName} ta logueado :3`
+      // document.querySelector('.v-log').textContent = `${user.displayName}`
     } else {
       document.querySelector('.user-name-post').textContent = 'No toy logueado'
+      document.querySelector('.v-log').textContent = 'No toy logueado'
     }
   })
 

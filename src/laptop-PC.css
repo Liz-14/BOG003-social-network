@@ -1,5 +1,5 @@
 /* ---------- Laptop 1440 x 900 ---------- */
-@media(min-width:414px){
+@media(min-width:415px){
   main{
     background-image: url(./img/backgroundPC1.png);
     padding-bottom: 1.6%
@@ -20,7 +20,7 @@
     width: 25vw;
   }
 
-h2{
+  h2{
       font-size: 3.5rem;
   }
 
@@ -106,6 +106,7 @@ h2{
     border: none;
     border-radius: 60px;
     justify-content: flex-end;
+    opacity: 0;
   }
 
   button#btn-home-pc {
@@ -146,7 +147,7 @@ h2{
   #posts li {
     margin-right: 10px;
   }
-  
+
   #btn-like {
     display: flex;
     border-radius: 40px;
@@ -154,16 +155,22 @@ h2{
     margin-right: 10px;
     box-sizing: 20px;
   }
-  
+
   #btn-delete {
     display: flex;
     border-radius: 40px;
     border: none;
     margin-right: 20px;
   }
-  
+
   .img-btn-wall {
     width: 30px;
+  }
+
+  #div-pet-name {
+    position: absolute;
+    margin-top: 35%;
+    right: 40%;
   }
 }
 
@@ -171,7 +178,7 @@ h2{
 
 @media(min-width:1600px){
   main{
-    padding-bottom: 0.7%
+    padding-bottom: 0;
   }
 
   #initial-container{
@@ -212,6 +219,7 @@ h2{
   .img-btn-nav{
     width: 3vw;
   }
+
 #img-perfil{
     width: 4.2vw;
   }

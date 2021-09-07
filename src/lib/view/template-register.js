@@ -1,5 +1,5 @@
 import { logOut, loginGoogle, register } from '../firebase/fireFunctions.js'
-import firebase from 'firebase'
+//import firebase from 'firebase'
 
 export const templateRegister = () => {
   const registerT = `
@@ -8,7 +8,7 @@ export const templateRegister = () => {
       <a href="#/"><img src="img/Logo.png" alt="logo" id="logo"></a>
     </header>
     <h2 class="background-title">Register</h2>
-    <input type="text" id = "user-name" class="input-register" placeholder="name">
+    <input type="text" id = "user-name" class="input-register" placeholder="pet name">
     <input type="email" class="input-register" placeholder="email">
     <input type="email" class="input-register" placeholder="check email">
     <input type="password" class="input-register" placeholder="password" id = "password">
