@@ -56,7 +56,8 @@ export const templateRegister = () => {
                 displayName: name
               }).then(() => {
                 const configuration = {
-                  url: 'http://localhost:5000/#/'
+                  url: 'https://liz-14.github.io/BOG003-social-network/src/#/'
+                  //url: 'http://localhost:5000/#/'
                 }
                 userCredential.user.sendEmailVerification(configuration)
               })
