@@ -43,8 +43,8 @@ export const templateWall = () => {
   </div>
   </section>
   `
-  //<h2 class = "user-name-post"></h2>
-  //<p class = "user-text-post"></p>
+  // <h2 class = "user-name-post"></h2>
+  // <p class = "user-text-post"></p>
   const divW = document.createElement('div')
   divW.id = 'w-container'
   divW.innerHTML = wall
@@ -57,8 +57,6 @@ export const templateWall = () => {
       document.querySelector('.user-name-post').textContent = 'No toy logueado'
     }
   })
-
-
 
   const btnLogoutMobile = divW.querySelector('#btn-logout-mobile')
   btnLogoutMobile.addEventListener('click', () => {
