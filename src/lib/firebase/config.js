@@ -1,3 +1,5 @@
+import firebase from 'firebase'
+
 export const firebaseConfig = {
   apiKey: 'AIzaSyBiUCDyTgk8igwITCE12MNBgPcRX9vZR7c',
   authDomain: 'petbook-eb24e.firebaseapp.com',
@@ -9,15 +11,3 @@ export const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig)
-
-/* firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      const displayName = user.displayName
-      const uid = user.uid
-      const email = user.email
-      const emailVerified = user.emailVerified
-      const photoURL = user.photoURL
-      const providerData = user.poviderdata
-    } else {
-    }
-}) */

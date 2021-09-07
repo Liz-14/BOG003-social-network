@@ -1,4 +1,5 @@
 import { logOut } from '../firebase/fireFunctions.js'
+import firebase from 'firebase'
 
 export const templateWall = () => {
   const wall = `
@@ -15,6 +16,7 @@ export const templateWall = () => {
     </ul>
   </nav>
 
+
   <header id = "pc-header">
     <img src="img/Logo.png" alt="logo" id="logo-w">
     <button type="button" class = "btn-logout" id="btn-logout-pc"><a href=""><img src="img/btnLogout.png" alt="logo" id="img-logout"></a></button>
@@ -29,8 +31,20 @@ export const templateWall = () => {
   </header>
 
   <h2 class = "v-log"></h2>
-  `
 
+  <section id ="posts">
+  <div class="container-posts">
+    <h2 id = "pet-name" class = "user-name-post"></h2>
+    <p class = "user-text-post"></p>
+    <ul>
+        <li> <button type="button" id="btn-like"> <a href="#"> <img src="img/like.png" alt="logo" class="img-btn-wall"> </a> </button> </li>
+        <li> <button type="button" id="btn-delete"> <a href="#"> <img src="img/delete.png" alt="logo" class="img-btn-wall"> </a> </button> </li>
+    </ul>
+  </div>
+  </section>
+  `
+  //<h2 class = "user-name-post"></h2>
+  //<p class = "user-text-post"></p>
   const divW = document.createElement('div')
   divW.id = 'w-container'
   divW.innerHTML = wall
@@ -38,11 +52,13 @@ export const templateWall = () => {
   // ----------------------  TEMPORALES ------------------------------------
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      document.querySelector('.v-log').textContent = `Toy logueado ${user.displayName}`
+      document.querySelector('.user-name-post').textContent = `${user.displayName}`
     } else {
-      document.querySelector('.v-log').textContent = 'No toy logueado'
+      document.querySelector('.user-name-post').textContent = 'No toy logueado'
     }
   })
+
+
 
   const btnLogoutMobile = divW.querySelector('#btn-logout-mobile')
   btnLogoutMobile.addEventListener('click', () => {

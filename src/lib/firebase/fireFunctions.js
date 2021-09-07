@@ -1,3 +1,4 @@
+import firebase from 'firebase'
 
 export const loginGoogle = () => {
   const provider = new firebase.auth.GoogleAuthProvider()

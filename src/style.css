@@ -197,6 +197,13 @@ a {
   margin-right: 3%;
 }
 
+li {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+
 .btn-logout{
   margin-top: 5%;
   margin-left: 7%;
@@ -237,14 +244,15 @@ a {
 
 #btn-publish, #btn-home, #btn-perfil{
   border: none;
-  opacity: 0;
 }
 
 #btn-home{
+  background-color: black;
   padding: 20%;
   border-radius: 40px;
   margin-top: 20%;
   margin-bottom: 30%;
+  
 }
 
 #btn-publish{
@@ -257,12 +265,11 @@ a {
 
 #btn-perfil{
   border-radius: 40px;
-  margin-top: 15%;
   margin-bottom: 0%;
 }
 
 #img-perfil{
-  width: 16.8vw;
+  width: 15vw;
 }
 
 .btn-nav{
@@ -285,4 +292,61 @@ a {
   position: fixed;
   margin-top: 30%;
   text-align: center;
+}
+
+/**********MURO************/
+
+#posts {
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  margin-top: 30%;
+  height: 30%;
+  width: 100%;
+}
+
+.container-posts {
+  position: relative;
+  background-color: #FFECE2;
+  border-radius: 15px;
+  width: 95%;
+  height: 90%;
+}
+
+h2.user-name-post {
+  padding-bottom: 5px;
+  padding-left: 5px;
+  margin-top: 10px;
+  margin-left: 20px;
+  width: 90%;
+  border-bottom: 1px solid orange;  
+  font-size: 2.5rem;
+  color: black;
+}
+
+#posts ul {
+  /* background-color: black; */
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
+
+#btn-like {
+  display: flex;
+  border-radius: 40px;
+  border: none;
+  margin-right: 10px;
+  box-sizing: 20px;
+}
+
+#btn-delete {
+  display: flex;
+  border-radius: 40px;
+  border: none;
+  margin-right: 20px;
+}
+
+.img-btn-wall {
+  width: 30px;
 }

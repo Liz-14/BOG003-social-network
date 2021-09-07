@@ -90,29 +90,81 @@ h2{
   }
 
   #w-container ul{
-    justify-content: space-evenly;
+    justify-content: flex-end;
+  }
+
+  #w-container li{
+    margin-right: 30px;
   }
 
   .img-btn-nav{
-    width: 4vw;
+    width: 3.5vw;
   }
 
   #btn-publish-pc, #btn-home-pc, #btn-perfil-pc{
     padding: 20%;
     border: none;
     border-radius: 60px;
-    opacity: 0;
+    justify-content: flex-end;
   }
 
+  button#btn-home-pc {
+    background-color: black;
+  }
   #img-perfil{
-    width: 5.5vw;
+    width: 5vw;
   }
 
   #btn-perfil-pc{
     padding: 0;
   }
 
+  #posts {
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-top: 20%;
+    height: 30%;
+    width: 100%;
+  }
 
+  .container-posts {
+    position: relative;
+    background-color: #FFECE2;
+    border-radius: 15px;
+    width: 40%;
+    height: 90%;
+  }
+
+  #posts ul {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+  }
+
+  #posts li {
+    margin-right: 10px;
+  }
+  
+  #btn-like {
+    display: flex;
+    border-radius: 40px;
+    border: none;
+    margin-right: 10px;
+    box-sizing: 20px;
+  }
+  
+  #btn-delete {
+    display: flex;
+    border-radius: 40px;
+    border: none;
+    margin-right: 20px;
+  }
+  
+  .img-btn-wall {
+    width: 30px;
+  }
 }
 
 /* ---------- PC 1920 x 1080 ---------- */
