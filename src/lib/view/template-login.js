@@ -1,5 +1,5 @@
 import { login, loginGoogle } from '../firebase/fireFunctions.js'
-import firebase from 'firebase'
+//import firebase from 'firebase'
 
 
 export const templateLogin = () => {
@@ -64,18 +64,12 @@ export const templateLogin = () => {
     e.preventDefault()
     loginGoogle()
       .then((result) => {
-      /** @type {firebase.auth.OAuthCredential} */
-       // const credential = result.credential
-
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        //const token = credential.accessToken
-        // The signed-in user info.
+        /** @type {firebase.auth.OAuthCredential} */
         const user = result.user
         console.log('user', user)
         location.hash = '#/Wall'
-      // ...
       }).catch((error) => {
-      // Handle Errors here.
+        // Handle Errors here.
         //const errorCode = error.code
         const errorMessage = error.message
         // The email of the user's account used.
@@ -88,7 +82,7 @@ export const templateLogin = () => {
         fireError.textContent = errorMessage
         fireError.style.display = 'block'
         setTimeout(() => { fireError.style.display = 'none' }, 6000)
-      // ...
+        // ...
       })
   })
 
