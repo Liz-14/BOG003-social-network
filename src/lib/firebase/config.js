@@ -9,15 +9,3 @@ export const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig)
-
-/* firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      const displayName = user.displayName
-      const uid = user.uid
-      const email = user.email
-      const emailVerified = user.emailVerified
-      const photoURL = user.photoURL
-      const providerData = user.poviderdata
-    } else {
-    }
-}) */
