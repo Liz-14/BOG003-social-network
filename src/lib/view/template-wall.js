@@ -85,7 +85,7 @@ export const templateWall = () => {
         })
       }
       document.querySelector('.user-name-post').textContent = `${user.displayName} ta logueado :3`
-      // document.querySelector('.v-log').textContent = `${user.displayName}`
+      document.querySelector('.v-log').textContent = `${user.displayName} ta logueado :3`
     } else {
       document.querySelector('.user-name-post').textContent = 'No toy logueado'
       document.querySelector('.v-log').textContent = 'No toy logueado'
