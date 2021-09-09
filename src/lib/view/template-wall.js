@@ -1,6 +1,7 @@
 import { logOut } from '../firebase/fireFunctions.js'
 // import firebase from 'firebase'
 
+// const db = firebase.firestore()
 export const templateWall = () => {
   const wall = `
   <header id = "mobile-header">
@@ -84,6 +85,19 @@ export const templateWall = () => {
           })
         })
       }
+      const db = firebase.firestore()
+      // Add a new document in collection "cities"
+      db.collection('muro').doc('post').set({
+        name: user.displayName,
+        post: 'CA',
+        likes: []
+      })
+        .then(() => {
+          console.log('Document successfully written!')
+        })
+        .catch((error) => {
+          console.error('Error writing document: ', error)
+        })
       document.querySelector('.user-name-post').textContent = `${user.displayName} ta logueado :3`
       document.querySelector('.v-log').textContent = `${user.displayName} ta logueado :3`
     } else {
