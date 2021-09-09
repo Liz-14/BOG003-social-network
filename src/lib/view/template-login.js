@@ -65,7 +65,8 @@ export const templateLogin = () => {
       .then((result) => {
         /** @type {firebase.auth.OAuthCredential} */
         const user = result.user
-        console.log('user', user)
+        // console.log('user', result.additionalUserInfo.isNewUser)
+        console.log(user.displayName)
         location.hash = '#/Wall'
       }).catch((error) => {
         // Handle Errors here.

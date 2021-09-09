@@ -56,6 +56,7 @@ export const templateWall = () => {
     if (user) {
       const userEmail = user.email
       if (userEmail.includes('gmail')) {
+        console.log('user', user.additionalUserInfo.isNewUser)
         const divPetName = document.createElement('div')
         divPetName.id = 'div-pet-name'
         divW.appendChild(divPetName)
