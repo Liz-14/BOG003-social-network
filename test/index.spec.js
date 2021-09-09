@@ -1,6 +1,5 @@
 // importamos la funcion que vamos a testear
 import { register } from '../src/lib/firebase/fireFunctions'
-//import { firebaseConfig } from '../src/lib/firebase/config.js'
 
 const firebasemock = require('firebase-mock')
 
@@ -8,8 +7,8 @@ const mockauth = new firebasemock.MockAuthentication()
 // var mockfirestore = new firebasemock.MockFirestore();
 const mocksdk = new firebasemock.MockFirebaseSdk(
   () => null,
-  () => mockAuth,
-);
+  () => mockauth
+)
 mocksdk.auth().autoFlush()
 global.firebase = mocksdk
 

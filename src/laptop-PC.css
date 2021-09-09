@@ -1,5 +1,5 @@
 /* ---------- Laptop 1440 x 900 ---------- */
-@media(min-width:414px){
+@media(min-width:415px){
   main{
     background-image: url(./img/backgroundPC1.png);
     padding-bottom: 1.6%
@@ -147,7 +147,7 @@
   #posts li {
     margin-right: 10px;
   }
-  
+
   #btn-like {
     display: flex;
     border-radius: 40px;
@@ -155,18 +155,18 @@
     margin-right: 10px;
     box-sizing: 20px;
   }
-  
+
   #btn-delete {
     display: flex;
     border-radius: 40px;
     border: none;
     margin-right: 20px;
   }
-  
+
   .img-btn-wall {
     width: 30px;
   }
-  
+
   #div-pet-name {
     position: absolute;
     margin-top: 35%;
@@ -178,7 +178,7 @@
 
 @media(min-width:1600px){
   main{
-    padding-bottom: 0.7%
+    padding-bottom: 0.6%;
   }
 
   #initial-container{
@@ -219,6 +219,7 @@
   .img-btn-nav{
     width: 3vw;
   }
+
 #img-perfil{
     width: 4.2vw;
   }

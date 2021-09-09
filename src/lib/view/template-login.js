@@ -1,6 +1,5 @@
 import { login, loginGoogle } from '../firebase/fireFunctions.js'
-//import firebase from 'firebase'
-
+// import firebase from 'firebase'
 
 export const templateLogin = () => {
   const loginT = `
@@ -29,11 +28,11 @@ export const templateLogin = () => {
 
     login(email, pass)
       .then((userCredential) => {
-        //const user = userCredential.user
+        // const user = userCredential.user
         // ...
       })
       .catch((error) => {
-        //const errorCode = error.code
+        // const errorCode = error.code
         const errorMessage = error.message
         const fireError = document.getElementById('fire-error')
         fireError.textContent = errorMessage
@@ -66,11 +65,12 @@ export const templateLogin = () => {
       .then((result) => {
         /** @type {firebase.auth.OAuthCredential} */
         const user = result.user
-        console.log('user', user)
+        // console.log('user', result.additionalUserInfo.isNewUser)
+        console.log(user.displayName)
         location.hash = '#/Wall'
       }).catch((error) => {
         // Handle Errors here.
-        //const errorCode = error.code
+        // const errorCode = error.code
         const errorMessage = error.message
         // The email of the user's account used.
         const email = error.email

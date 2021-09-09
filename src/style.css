@@ -36,7 +36,7 @@ main{
     border-radius: 15px;
     box-shadow: 1px 3px 10px #733527;
     height: auto;
-    margin: 50% 0%;
+    margin: 54.5% 0%;
     position: relative;
     padding: 5% 0%;
     width: 75vw;
@@ -253,7 +253,7 @@ li {
   border-radius: 40px;
   margin-top: 20%;
   margin-bottom: 30%;
-  
+
 }
 
 #btn-publish{
@@ -295,11 +295,6 @@ li {
   text-align: center;
 }
 
-#div-pet-name {
-  position: absolute;
-  margin-top: 40%;
-  right: 90px;
-}
 /**********MURO************/
 
 #posts {
@@ -318,7 +313,6 @@ li {
   border-radius: 15px;
   width: 95%;
   height: 90%;
-  opacity: 0;
 }
 
 h2.user-name-post {
@@ -327,7 +321,7 @@ h2.user-name-post {
   margin-top: 10px;
   margin-left: 20px;
   width: 90%;
-  border-bottom: 1px solid orange;  
+  border-bottom: 1px solid orange;
   font-size: 2.5rem;
   color: black;
 }
@@ -356,4 +350,20 @@ h2.user-name-post {
 
 .img-btn-wall {
   width: 30px;
+}
+
+#div-pet-name {
+  position: absolute;
+  margin-top: 40%;
+  right: 40px;
+  display: flex;
+}
+
+#btn-pet-name{
+  margin-left: 3%;
+  border: 1px solid #333333;
+}
+
+#pet-input{
+  border-radius: 5px;
 }

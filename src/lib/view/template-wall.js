@@ -1,6 +1,7 @@
 import { logOut } from '../firebase/fireFunctions.js'
-//import firebase from 'firebase'
+// import firebase from 'firebase'
 
+// const db = firebase.firestore()
 export const templateWall = () => {
   const wall = `
   <header id = "mobile-header">
@@ -43,61 +44,68 @@ export const templateWall = () => {
   </div>
   </section>
   `
-  //<h2 class = "user-name-post"></h2>
-  //<p class = "user-text-post"></p>
+  // <h2 class = "user-name-post"></h2>
+  // <p class = "user-text-post"></p>
   const divW = document.createElement('div')
   divW.id = 'w-container'
   divW.innerHTML = wall
 
   // ----------------------  TEMPORALES ------------------------------------
 
-
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       const userEmail = user.email
-      if (userEmail.includes("gmail")) {
-        const divPetName = document.createElement("div")
-        divPetName.id = "div-pet-name"
+      if (userEmail.includes('gmail')) {
+        console.log('user', user.additionalUserInfo.isNewUser)
+        const divPetName = document.createElement('div')
+        divPetName.id = 'div-pet-name'
         divW.appendChild(divPetName)
-        const petName = document.createElement("input")
-        petName.type = "text"
-        petName.placeholder = "Pet Name"
-        petName.id = "pet-input"
+        const petName = document.createElement('input')
+        petName.type = 'text'
+        petName.placeholder = 'Pet Name'
+        petName.id = 'pet-input'
+        petName.className = 'input-register'
         divPetName.appendChild(petName)
-        const btnPetName = document.createElement("button")
-        btnPetName.id = "btn-pet-name"
-        btnPetName.textContent = "enviar"
+        const btnPetName = document.createElement('button')
+        btnPetName.id = 'btn-pet-name'
+        btnPetName.textContent = 'Enviar'
+        btnPetName.className = 'btn-p'
         divPetName.appendChild(btnPetName)
 
-        document.getElementById("btn-pet-name").addEventListener("click", () => {
-
-          const valuePetName = document.getElementById("pet-input").value
-          const changeUser = firebase.auth().currentUser;
-          document.getElementById("w-container").removeChild(document.getElementById("div-pet-name"))
+        document.getElementById('btn-pet-name').addEventListener('click', () => {
+          const valuePetName = document.getElementById('pet-input').value
+          const changeUser = firebase.auth().currentUser
+          document.getElementById('w-container').removeChild(document.getElementById('div-pet-name'))
 
           changeUser.updateProfile({
-            displayName: valuePetName,
+            displayName: valuePetName
           }).then(() => {
-            document.querySelector('.v-log').textContent = `${user.displayName}`
-            // Update successful
-            // ...
+            document.querySelector('.v-log').textContent = `${user.displayName} ta logueado :3`
           }).catch((error) => {
-            // An error occurred
-            // ...
-          });
-
+            console.error(error.message)
+          })
         })
       }
-      document.querySelector('.user-name-post').textContent = `${user.displayName}`
-      //document.querySelector('.v-log').textContent = `${user.displayName}`
+      const db = firebase.firestore()
+      // Add a new document in collection "cities"
+      db.collection('muro').doc('post').set({
+        name: user.displayName,
+        post: 'CA',
+        likes: []
+      })
+        .then(() => {
+          console.log('Document successfully written!')
+        })
+        .catch((error) => {
+          console.error('Error writing document: ', error)
+        })
+      document.querySelector('.user-name-post').textContent = `${user.displayName} ta logueado :3`
+      document.querySelector('.v-log').textContent = `${user.displayName} ta logueado :3`
     } else {
       document.querySelector('.user-name-post').textContent = 'No toy logueado'
+      document.querySelector('.v-log').textContent = 'No toy logueado'
     }
   })
-
-
-
-
 
   const btnLogoutMobile = divW.querySelector('#btn-logout-mobile')
   btnLogoutMobile.addEventListener('click', () => {

@@ -1,5 +1,5 @@
 import { logOut, loginGoogle, register } from '../firebase/fireFunctions.js'
-//import firebase from 'firebase'
+// import firebase from 'firebase'
 
 export const templateRegister = () => {
   const registerT = `
@@ -56,7 +56,8 @@ export const templateRegister = () => {
                 displayName: name
               }).then(() => {
                 const configuration = {
-                  url: 'http://localhost:5000/#/'
+                  url: 'https://liz-14.github.io/BOG003-social-network/src/#/'
+                  // url: 'http://localhost:5000/#/'
                 }
                 userCredential.user.sendEmailVerification(configuration)
               })
