@@ -30,13 +30,15 @@ export const templateWall = () => {
       </ul>
     </nav>
   </header>
-
+  
+  
   <h2 class = "v-log"></h2>
-
+  
+ 
   <section id ="posts">
   <div class="container-posts">
     <h2 id = "pet-name" class = "user-name-post"></h2>
-    <p class = "user-text-post"></p>
+    
     <ul>
         <li> <button type="button" id="btn-like"> <a href="#"> <img src="img/like.png" alt="logo" class="img-btn-wall"> </a> </button> </li>
         <li> <button type="button" id="btn-delete"> <a href="#"> <img src="img/delete.png" alt="logo" class="img-btn-wall"> </a> </button> </li>
@@ -89,48 +91,18 @@ export const templateWall = () => {
     document.querySelector('#initial-container').style.display = 'block'
     logOut()
     location.hash = '#/'
+
+  const btnCreatePost = divW.querySelector('#btn-publish')
+  btnCreatePost.addEventListener('click',()=>{
+   document.querySelector('#posts')
+  
+
+  })
+
   })
   // ----------------------------------------------------------------------------
   return divW
 }
 
-export const modalNamePet = () => {
 
-  //let modalDiv = document.getElementById("w-section")
-  //const userEmail = user.email
-  const sectionPetName = document.createElement('section')
-  sectionPetName.id = 'section-pet-name'
 
-  //console.log('user', user.additionalUserInfo.isNewUser)
-  const divPetName = document.createElement('div')
-  divPetName.id = 'div-pet-name'
-  sectionPetName.appendChild(divPetName)
-  const petName = document.createElement('input')
-  petName.type = 'text'
-  petName.placeholder = 'put the name of your pet'
-  petName.id = 'pet-input'
-  petName.className = 'input-register'
-  divPetName.appendChild(petName)
-  const btnPetName = document.createElement('button')
-  btnPetName.id = 'btn-pet-name'
-  btnPetName.textContent = 'Enviar'
-  btnPetName.className = 'btn-p'
-  divPetName.appendChild(btnPetName)
-
-  btnPetName.addEventListener('click', () => {
-    const valuePetName = document.getElementById('pet-input').value
-    const changeUser = firebase.auth().currentUser
-    location.hash = '#/Wall'
-
-    changeUser.updateProfile({
-      displayName: valuePetName
-    }).then(() => {
-      document.querySelector('.v-log').textContent = `${valuePetName}`
-    }).catch((error) => {
-      console.error(error.message)
-    })
-  })
-
-  return sectionPetName
-
-}
