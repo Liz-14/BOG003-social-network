@@ -65,9 +65,16 @@ export const templateLogin = () => {
       .then((result) => {
         /** @type {firebase.auth.OAuthCredential} */
         const user = result.user
-        // console.log('user', result.additionalUserInfo.isNewUser)
+        console.log(user)
+        //location.hash = '#/Wall'
+        if (result.additionalUserInfo.isNewUser == true){
+          location.hash = '#/pet'
+        }else {
+          location.hash = '#/Wall'
+        }
+        console.log('user', result.additionalUserInfo.isNewUser)//se verifica si el ususario es nuevo o no 
         console.log(user.displayName)
-        location.hash = '#/Wall'
+        
       }).catch((error) => {
         // Handle Errors here.
         // const errorCode = error.code

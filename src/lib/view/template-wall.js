@@ -54,38 +54,7 @@ export const templateWall = () => {
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      const userEmail = user.email
-      if (userEmail.includes('gmail')) {
-        console.log('user', user.additionalUserInfo.isNewUser)
-        const divPetName = document.createElement('div')
-        divPetName.id = 'div-pet-name'
-        divW.appendChild(divPetName)
-        const petName = document.createElement('input')
-        petName.type = 'text'
-        petName.placeholder = 'Pet Name'
-        petName.id = 'pet-input'
-        petName.className = 'input-register'
-        divPetName.appendChild(petName)
-        const btnPetName = document.createElement('button')
-        btnPetName.id = 'btn-pet-name'
-        btnPetName.textContent = 'Enviar'
-        btnPetName.className = 'btn-p'
-        divPetName.appendChild(btnPetName)
 
-        document.getElementById('btn-pet-name').addEventListener('click', () => {
-          const valuePetName = document.getElementById('pet-input').value
-          const changeUser = firebase.auth().currentUser
-          document.getElementById('w-container').removeChild(document.getElementById('div-pet-name'))
-
-          changeUser.updateProfile({
-            displayName: valuePetName
-          }).then(() => {
-            document.querySelector('.v-log').textContent = `${user.displayName} ta logueado :3`
-          }).catch((error) => {
-            console.error(error.message)
-          })
-        })
-      }
       const db = firebase.firestore()
       // Add a new document in collection "cities"
       db.collection('muro').doc('post').set({
@@ -100,7 +69,8 @@ export const templateWall = () => {
           console.error('Error writing document: ', error)
         })
       document.querySelector('.user-name-post').textContent = `${user.displayName} ta logueado :3`
-      document.querySelector('.v-log').textContent = `${user.displayName} ta logueado :3`
+      document.querySelector('.v-log').innerHTML = `Bienvenid@ ${user.displayName}`
+      setTimeout(() => { document.querySelector('.v-log').style.display = 'none' }, 3000)
     } else {
       document.querySelector('.user-name-post').textContent = 'No toy logueado'
       document.querySelector('.v-log').textContent = 'No toy logueado'
@@ -122,4 +92,45 @@ export const templateWall = () => {
   })
   // ----------------------------------------------------------------------------
   return divW
+}
+
+export const modalNamePet = () => {
+
+  //let modalDiv = document.getElementById("w-section")
+  //const userEmail = user.email
+  const sectionPetName = document.createElement('section')
+  sectionPetName.id = 'section-pet-name'
+
+  //console.log('user', user.additionalUserInfo.isNewUser)
+  const divPetName = document.createElement('div')
+  divPetName.id = 'div-pet-name'
+  sectionPetName.appendChild(divPetName)
+  const petName = document.createElement('input')
+  petName.type = 'text'
+  petName.placeholder = 'put the name of your pet'
+  petName.id = 'pet-input'
+  petName.className = 'input-register'
+  divPetName.appendChild(petName)
+  const btnPetName = document.createElement('button')
+  btnPetName.id = 'btn-pet-name'
+  btnPetName.textContent = 'Enviar'
+  btnPetName.className = 'btn-p'
+  divPetName.appendChild(btnPetName)
+
+  btnPetName.addEventListener('click', () => {
+    const valuePetName = document.getElementById('pet-input').value
+    const changeUser = firebase.auth().currentUser
+    location.hash = '#/Wall'
+
+    changeUser.updateProfile({
+      displayName: valuePetName
+    }).then(() => {
+      document.querySelector('.v-log').textContent = `${valuePetName}`
+    }).catch((error) => {
+      console.error(error.message)
+    })
+  })
+
+  return sectionPetName
+
 }
