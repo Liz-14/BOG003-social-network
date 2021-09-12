@@ -56,7 +56,6 @@ export const templateWall = () => {
     if (user) {
       const userEmail = user.email
       if (userEmail.includes('gmail')) {
-        console.log('user', user.additionalUserInfo.isNewUser)
         const divPetName = document.createElement('div')
         divPetName.id = 'div-pet-name'
         divW.appendChild(divPetName)
@@ -88,22 +87,31 @@ export const templateWall = () => {
       }
       const db = firebase.firestore()
       // Add a new document in collection "cities"
-      db.collection('muro').doc('post').set({
+      db.collection('muro').doc(user.displayName).set({
         name: user.displayName,
         post: 'CA',
         likes: []
       })
         .then(() => {
           console.log('Document successfully written!')
+          db.collection('muro').doc(user.displayName).update({
+            post: 'miau',
+            likes: [1, 1, 1]
+          })
+            .then((docRef) => {
+              console.log('Document written with ID: ', docRef.id)
+            })
+            .catch((error) => {
+              console.error('Error adding document: ', error)
+            })
         })
         .catch((error) => {
           console.error('Error writing document: ', error)
         })
+
       document.querySelector('.user-name-post').textContent = `${user.displayName} ta logueado :3`
-      document.querySelector('.v-log').textContent = `${user.displayName} ta logueado :3`
     } else {
       document.querySelector('.user-name-post').textContent = 'No toy logueado'
-      document.querySelector('.v-log').textContent = 'No toy logueado'
     }
   })
 
