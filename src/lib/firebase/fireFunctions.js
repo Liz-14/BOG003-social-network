@@ -16,3 +16,4 @@ export const login = (email, password) => {
 export const logOut = () => {
   return firebase.auth().signOut()
 }
+
