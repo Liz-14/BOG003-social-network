@@ -12,7 +12,7 @@ export const templateWall = () => {
   <nav id = "mobile-nav">
     <ul>
       <li> <button type="button" id="btn-home"> <a href="#"> <img src="img/home.png" alt="logo" class="img-btn-nav"> </a> </button> </li>
-      <li> <button type="button" id="btn-publish"> <a href="#"> <img src="img/publish.png" alt="logo" class="img-btn-nav"> </a> </button> </li>
+      <li> <button type="button" id="btn-publish"> <img src="img/publish.png" alt="logo" class="img-btn-nav"></button> </li>
       <li> <button type="button" id="btn-perfil"> <a href="#"> <img src="img/perfil.png" alt="logo" class="img-btn-nav" id="img-perfil"> </a> </button> </li>
     </ul>
   </nav>
@@ -33,18 +33,6 @@ export const templateWall = () => {
   
   
   <h2 class = "v-log"></h2>
-  
- 
-  <section id ="posts">
-  <div class="container-posts">
-    <h2 id = "pet-name" class = "user-name-post"></h2>
-    
-    <ul>
-        <li> <button type="button" id="btn-like"> <a href="#"> <img src="img/like.png" alt="logo" class="img-btn-wall"> </a> </button> </li>
-        <li> <button type="button" id="btn-delete"> <a href="#"> <img src="img/delete.png" alt="logo" class="img-btn-wall"> </a> </button> </li>
-    </ul>
-  </div>
-  </section>
   `
   // <h2 class = "user-name-post"></h2>
   // <p class = "user-text-post"></p>
@@ -58,21 +46,49 @@ export const templateWall = () => {
     if (user) {
 
       const db = firebase.firestore()
-      // Add a new document in collection "cities"
-      db.collection('muro').doc('post').set({
-        name: user.displayName,
-        post: 'CA',
-        likes: []
-      })
-        .then(() => {
-          console.log('Document successfully written!')
-        })
-        .catch((error) => {
-          console.error('Error writing document: ', error)
-        })
-      document.querySelector('.user-name-post').textContent = `${user.displayName} ta logueado :3`
+
       document.querySelector('.v-log').innerHTML = `Bienvenid@ ${user.displayName}`
       setTimeout(() => { document.querySelector('.v-log').style.display = 'none' }, 3000)
+
+      const btnCreatePost = divW.querySelector('#btn-publish')
+      btnCreatePost.addEventListener('click', () => {
+        const post = `
+      <div class="container-posts">
+      <h2 id = "pet-name" class = "user-name-post"></h2>
+      <textarea id="write-post" placeholder= "¿Qué hiciste hoy?"></textarea>
+      <button type="button" id="send-post"> <a href="#"></a>Publicar</button> 
+   
+      </div>`
+
+        const divPost = document.createElement('section')
+        divPost.id = 'posts'
+        divPost.innerHTML = post
+        console.log(divPost)
+        let container = document.getElementById('w-container')
+        console.log(container)
+        container.appendChild(divPost)
+        document.querySelector('.user-name-post').textContent = `${user.displayName} ta logueado :3`
+
+        const btnPublish = divPost.querySelector("#send-post")
+        btnPublish.addEventListener('click', () => {
+          //console.log("hola")
+          const writePost = document.getElementById("write-post").value
+          db.collection("muro").add({
+            petname: user.displayName,
+            post: writePost,
+            date: firebase.firestore.FieldValue.serverTimestamp(),
+          })
+            .then((docRef) => {
+              console.log("Document written with ID: ", docRef.id);
+            })
+            .catch((error) => {
+              console.error("Error adding document: ", error);
+            });
+        })
+
+      })
+
+
     } else {
       document.querySelector('.user-name-post').textContent = 'No toy logueado'
       document.querySelector('.v-log').textContent = 'No toy logueado'
@@ -92,17 +108,24 @@ export const templateWall = () => {
     logOut()
     location.hash = '#/'
 
-  const btnCreatePost = divW.querySelector('#btn-publish')
-  btnCreatePost.addEventListener('click',()=>{
-   document.querySelector('#posts')
-  
-
   })
 
-  })
+
   // ----------------------------------------------------------------------------
   return divW
 }
+/*const writePost = document.getElementById("write-post").value
+db.collection("muro").add({
+  petname: user.displayName,
+  post: writePost,
+  date: firebase.firestore.Timestamp.fromDate(new Date("December 10, 1815"))
+})
+  .then((docRef) => {
+    console.log("Document written with ID: ", docRef.id);
+  })
+  .catch((error) => {
+    console.error("Error adding document: ", error);
+  });*/
 
 
 

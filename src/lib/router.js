@@ -3,6 +3,8 @@ import { templateHome } from './view/template-home.js'
 import { templateLogin } from './view/template-login.js'
 import { templateWall } from './view/template-wall.js'
 import { modalNamePet } from './view/name-pet.js'
+//import { writePostModal } from './view/template-wall.js'
+
 // al recargar la pagina cambia el hash
 location.hash = '#/'
 const initialContainer = document.getElementById('initial-container')
@@ -28,6 +30,7 @@ export const router = (hash) => {
       document.querySelector('#w-section').style.display = 'block'
       initialContainer.style.display = 'none'
       wallContainer.appendChild(templateWall())
+      //wallContainer.appendChild(writePostModal())
       break
 
     case '#/pet':
