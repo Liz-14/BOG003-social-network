@@ -31,7 +31,7 @@ export const templateWall = () => {
   </header>
 
 
-  <h2 class = "v-log"></h2>
+  <div class = "v-log"></div>
   `
   // <h2 class = "user-name-post"></h2>
   // <p class = "user-text-post"></p>
@@ -45,8 +45,11 @@ export const templateWall = () => {
     if (user) {
       const db = firebase.firestore()
 
-      document.querySelector('.v-log').innerHTML = `Bienvenid@ ${user.displayName}`
-      setTimeout(() => { document.querySelector('.v-log').style.display = 'none' }, 3000)
+      document.querySelector('.v-log').innerHTML = `
+      <h2>Hi ${user.displayName}!</h2>
+      <img src="img/loadingw.png" alt="logo" class="loading">`
+      setTimeout(() => { document.querySelector('.v-log').style.display = 'none' }, 2000)
+      //document.querySelector('.v-log').style.display = 'block' 
 
       const btnCreatePost = divW.querySelector('#btn-publish')
       btnCreatePost.addEventListener('click', () => {
@@ -54,7 +57,7 @@ export const templateWall = () => {
           <div class="container-posts">
             <div id="title-post">
               <h2 id = "pet-name" class = "user-name-post"></h2>
-              <h3 id = "date-post">c:</h3>
+              <h3 id = "date-post"></h3>
             </div>
 
             <div id="write">
@@ -112,17 +115,27 @@ export const templateWall = () => {
           <ul>
           <li> <button type="button" id="btn-like"> <img src="img/like.png" alt="logo" class="img-btn-wall"></button> </li>
           <li> <button type="button" class = "btns-crud" id="btn-delete"> <img src="img/delete.png" alt="logo" class="img-btn-wall"></button> </li>
-          <li> <button type="button" id="btn-edit">Edit</button> </li>
+          <li> <button type="button" id="btn-edit"><img src="img/edit.png" alt="logo" class="img-btn-wall"></button> </li>
           </ul>
           </div>`
 
-          const btnDelete = document.querySelector('.btns-crud')
+          const btnDelete = document.getElementById('btn-delete')
           btnDelete.addEventListener('click', () => deletePost(`${doc.id}`))
           console.log(`${doc.id}`)
 
         });
       });
+      const deletePost = (id)=>{
+        console.log(id)
+        db.collection('muro').doc(id).delete().then(() => {
+          console.log("Document successfully deleted!");
+        }).catch((error) => {
+          console.error("Error removing document: ", error);
+        });
+
+      }
       
+
     } else {
       document.querySelector('.user-name-post').textContent = 'No toy logueado'
     }
