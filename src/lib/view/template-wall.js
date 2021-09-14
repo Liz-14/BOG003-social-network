@@ -30,8 +30,8 @@ export const templateWall = () => {
       </ul>
     </nav>
   </header>
-  
-  
+
+
   <h2 class = "v-log"></h2>
   `
   // <h2 class = "user-name-post"></h2>
@@ -44,7 +44,6 @@ export const templateWall = () => {
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-
       const db = firebase.firestore()
 
       document.querySelector('.v-log').innerHTML = `Bienvenid@ ${user.displayName}`
@@ -53,45 +52,44 @@ export const templateWall = () => {
       const btnCreatePost = divW.querySelector('#btn-publish')
       btnCreatePost.addEventListener('click', () => {
         const post = `
-      <div class="container-posts">
-      <h2 id = "pet-name" class = "user-name-post"></h2>
-      <textarea id="write-post" placeholder= "¿Qué hiciste hoy?"></textarea>
-      <button type="button" id="send-post"> <a href="#"></a>Publicar</button> 
-   
-      </div>`
+          <div class="container-posts">
+            <div id="title-post">
+              <h2 id = "pet-name" class = "user-name-post"></h2>
+              <h3 id = "date-post">c:</h3>
+            </div>
+
+            <div id="write">
+              <textarea id="write-post" placeholder= "¿Qué hiciste hoy?"></textarea>
+              <button type="button" id="send-post" class="btn-p">Publicar</button>
+            </div>
+          </div>`
 
         const divPost = document.createElement('section')
         divPost.id = 'posts'
         divPost.innerHTML = post
-        console.log(divPost)
-        let container = document.getElementById('w-container')
-        console.log(container)
+        const container = document.getElementById('w-container')
         container.appendChild(divPost)
-        document.querySelector('.user-name-post').textContent = `${user.displayName} ta logueado :3`
+        document.querySelector('.user-name-post').textContent = `${user.displayName}`
 
-        const btnPublish = divPost.querySelector("#send-post")
+        const btnPublish = divPost.querySelector('#send-post')
         btnPublish.addEventListener('click', () => {
-          //console.log("hola")
-          const writePost = document.getElementById("write-post").value
-          db.collection("muro").add({
+          // console.log("hola")
+          const writePost = document.getElementById('write-post').value
+          db.collection('muro').add({
             petname: user.displayName,
             post: writePost,
-            date: firebase.firestore.FieldValue.serverTimestamp(),
+            date: firebase.firestore.FieldValue.serverTimestamp()
           })
             .then((docRef) => {
-              console.log("Document written with ID: ", docRef.id);
+              console.log('Document written with ID: ', docRef.id)
             })
             .catch((error) => {
-              console.error("Error adding document: ", error);
-            });
+              console.error('Error adding document: ', error)
+            })
         })
-
       })
-
-
     } else {
       document.querySelector('.user-name-post').textContent = 'No toy logueado'
-      document.querySelector('.v-log').textContent = 'No toy logueado'
     }
   })
 
@@ -107,14 +105,12 @@ export const templateWall = () => {
     document.querySelector('#initial-container').style.display = 'block'
     logOut()
     location.hash = '#/'
-
   })
-
 
   // ----------------------------------------------------------------------------
   return divW
 }
-/*const writePost = document.getElementById("write-post").value
+/* const writePost = document.getElementById("write-post").value
 db.collection("muro").add({
   petname: user.displayName,
   post: writePost,
@@ -125,7 +121,4 @@ db.collection("muro").add({
   })
   .catch((error) => {
     console.error("Error adding document: ", error);
-  });*/
-
-
-
+  }); */
