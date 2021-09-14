@@ -1,14 +1,13 @@
 import { logOut } from '../firebase/fireFunctions.js'
-// import firebase from 'firebase'
 
-// const db = firebase.firestore()
+
 export const templateWall = () => {
   const wall = `
   <header id = "mobile-header">
     <button type="button" class = "btn-logout" id="btn-logout-mobile"><a href="#/"><img src="img/btnLogout.png" alt="logo" id="img-logout"></a></button>
     <img src="img/Logo.png" alt="logo" id="logo-w">
   </header>
-
+  <section id = "posts"></section>
   <nav id = "mobile-nav">
     <ul>
       <li> <button type="button" id="btn-home"> <a href="#"> <img src="img/home.png" alt="logo" class="img-btn-nav"> </a> </button> </li>
@@ -64,14 +63,12 @@ export const templateWall = () => {
             </div>
           </div>`
 
-        const divPost = document.createElement('section')
-        divPost.id = 'posts'
-        divPost.innerHTML = post
-        const container = document.getElementById('w-container')
-        container.appendChild(divPost)
-        document.querySelector('.user-name-post').textContent = `${user.displayName}`
 
-        const btnPublish = divPost.querySelector('#send-post')
+        const container = document.getElementById('posts')
+        container.innerHTML = post
+        container.querySelector('.user-name-post').textContent = `${user.displayName}`
+
+        const btnPublish = container.querySelector('#send-post')
         btnPublish.addEventListener('click', () => {
           // console.log("hola")
           const writePost = document.getElementById('write-post').value
@@ -82,12 +79,50 @@ export const templateWall = () => {
           })
             .then((docRef) => {
               console.log('Document written with ID: ', docRef.id)
+
             })
             .catch((error) => {
               console.error('Error adding document: ', error)
             })
         })
+
       })
+      db.collection('muro').onSnapshot((querySnapshot) => {
+
+        document.getElementById('posts').innerHTML = ''
+        querySnapshot.forEach((doc) => {
+
+          const date = new Date(doc.data().date && doc.data().date.seconds * 1000)
+          const days = date.getDate()
+          const month = date.getMonth() + 1
+          const year = date.getFullYear()
+
+          //console.log(`${doc.id} => ${days}/${month}/${year} ${hours}:${minutes}:${seconds}`);
+          document.getElementById('posts').innerHTML += `
+           <div class="container-posts">
+            <div id="title-post">
+            <h2 id = "pet-name" class = "user-name-post">${doc.data().petname}</h2>
+            <h3 id = "date-post">${days}/${month}/${year} </h3>
+          </div>
+
+          <div id="write">
+            <p id="write-post" >${doc.data().post}</p>
+          </div>
+
+          <ul>
+          <li> <button type="button" id="btn-like"> <img src="img/like.png" alt="logo" class="img-btn-wall"></button> </li>
+          <li> <button type="button" class = "btns-crud" id="btn-delete"> <img src="img/delete.png" alt="logo" class="img-btn-wall"></button> </li>
+          <li> <button type="button" id="btn-edit">Edit</button> </li>
+          </ul>
+          </div>`
+
+          const btnDelete = document.querySelector('.btns-crud')
+          btnDelete.addEventListener('click', () => deletePost(`${doc.id}`))
+          console.log(`${doc.id}`)
+
+        });
+      });
+      
     } else {
       document.querySelector('.user-name-post').textContent = 'No toy logueado'
     }
@@ -110,15 +145,4 @@ export const templateWall = () => {
   // ----------------------------------------------------------------------------
   return divW
 }
-/* const writePost = document.getElementById("write-post").value
-db.collection("muro").add({
-  petname: user.displayName,
-  post: writePost,
-  date: firebase.firestore.Timestamp.fromDate(new Date("December 10, 1815"))
-})
-  .then((docRef) => {
-    console.log("Document written with ID: ", docRef.id);
-  })
-  .catch((error) => {
-    console.error("Error adding document: ", error);
-  }); */
+
