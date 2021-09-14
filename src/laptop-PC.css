@@ -106,7 +106,10 @@
     border: none;
     border-radius: 60px;
     justify-content: flex-end;
-    opacity: 0;
+  }
+
+  #btn-publish-pc{
+    margin-left: 20%;
   }
 
   button#btn-home-pc {

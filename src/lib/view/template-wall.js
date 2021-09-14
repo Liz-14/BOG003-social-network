@@ -33,21 +33,6 @@ export const templateWall = () => {
 
 
   <h2 class = "v-log"></h2>
-<<<<<<< HEAD
-
-
-  <section id ="posts">
-  <div class="container-posts">
-    <h2 id = "pet-name" class = "user-name-post"></h2>
-
-    <ul>
-        <li> <button type="button" id="btn-like"> <a href="#"> <img src="img/like.png" alt="logo" class="img-btn-wall"> </a> </button> </li>
-        <li> <button type="button" id="btn-delete"> <a href="#"> <img src="img/delete.png" alt="logo" class="img-btn-wall"> </a> </button> </li>
-    </ul>
-  </div>
-  </section>
-=======
->>>>>>> c2d8e10c5e8709f4e3b9448f35663149b4d22393
   `
   // <h2 class = "user-name-post"></h2>
   // <p class = "user-text-post"></p>
@@ -67,21 +52,24 @@ export const templateWall = () => {
       const btnCreatePost = divW.querySelector('#btn-publish')
       btnCreatePost.addEventListener('click', () => {
         const post = `
-      <div class="container-posts">
-      <h2 id = "pet-name" class = "user-name-post"></h2>
-      <textarea id="write-post" placeholder= "¿Qué hiciste hoy?"></textarea>
-      <button type="button" id="send-post"> <a href="#"></a>Publicar</button>
+          <div class="container-posts">
+            <div id="title-post">
+              <h2 id = "pet-name" class = "user-name-post"></h2>
+              <h3 id = "date-post">c:</h3>
+            </div>
 
-      </div>`
+            <div id="write">
+              <textarea id="write-post" placeholder= "¿Qué hiciste hoy?"></textarea>
+              <button type="button" id="send-post" class="btn-p">Publicar</button>
+            </div>
+          </div>`
 
         const divPost = document.createElement('section')
         divPost.id = 'posts'
         divPost.innerHTML = post
-        console.log(divPost)
         const container = document.getElementById('w-container')
-        console.log(container)
         container.appendChild(divPost)
-        document.querySelector('.user-name-post').textContent = `${user.displayName} ta logueado :3`
+        document.querySelector('.user-name-post').textContent = `${user.displayName}`
 
         const btnPublish = divPost.querySelector('#send-post')
         btnPublish.addEventListener('click', () => {
