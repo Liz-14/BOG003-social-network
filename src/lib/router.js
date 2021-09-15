@@ -29,7 +29,6 @@ export const router = (hash) => {
       document.querySelector('#w-section').style.display = 'block'
       initialContainer.style.display = 'none'
       wallContainer.appendChild(templateWall())
-      // wallContainer.appendChild(writePostModal())
       break
 
     case '#/pet':

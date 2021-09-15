@@ -1,12 +1,8 @@
-// import {templateWall} from './template-wall.js'
 
 export const modalNamePet = () => {
-  // let modalDiv = document.getElementById("w-section")
-  // const userEmail = user.email
   const sectionPetName = document.createElement('section')
   sectionPetName.id = 'section-pet-name'
 
-  // console.log('user', user.additionalUserInfo.isNewUser)
   const divPetName = document.createElement('div')
   divPetName.id = 'div-pet-name'
   sectionPetName.appendChild(divPetName)

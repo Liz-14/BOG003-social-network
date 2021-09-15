@@ -32,8 +32,6 @@ export const templateWall = () => {
 
   <div class = "v-log"></div>
   `
-  // <h2 class = "user-name-post"></h2>
-  // <p class = "user-text-post"></p>
   const divW = document.createElement('div')
   divW.id = 'w-container'
   divW.innerHTML = wall
@@ -43,8 +41,11 @@ export const templateWall = () => {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       const db = firebase.firestore()
-      // Mensaje de binevenida
-      document.querySelector('.v-log').innerHTML = `Bienvenid@ ${user.displayName}`
+
+      // Mensaje de bienvenida
+      document.querySelector('.v-log').innerHTML = `
+      <h2>Hi ${user.displayName}!</h2>
+      <img src="img/loadingw.png" alt="logo" class="loading">`
       setTimeout(() => { document.querySelector('.v-log').style.display = 'none' }, 2000)
 
       // Evento para crear una publicacion
@@ -111,7 +112,7 @@ export const templateWall = () => {
               <ul>
                 <li> <button type="button" id="btn-like"> <img src="img/like.png" alt="logo" class="img-btn-wall"></button> </li>
                 <li> <button type="button" class = "btns-crud" id="btn-delete" data-id = "${doc.id}"> <img src="img/delete.png" alt="logo" class="img-btn-wall"></button> </li>
-                <li> <button type="button" id="btn-edit">Edit</button> </li>
+                <li> <button type="button" id="btn-edit"><img src="img/edit.png" alt="logo" class="img-btn-wall"></button> </li>
               </ul>
             </div>`
         })
