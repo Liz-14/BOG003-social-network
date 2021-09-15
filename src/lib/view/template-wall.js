@@ -1,6 +1,5 @@
 import { logOut } from '../firebase/fireFunctions.js'
 
-
 export const templateWall = () => {
   const wall = `
   <header id = "mobile-header">
@@ -39,15 +38,16 @@ export const templateWall = () => {
   divW.id = 'w-container'
   divW.innerHTML = wall
 
-  // ----------------------  TEMPORALES ------------------------------------
+  // ----------------------  Verificacion ususario Logueado ------------------------------------
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       const db = firebase.firestore()
-
+      // Mensaje de binevenida
       document.querySelector('.v-log').innerHTML = `Bienvenid@ ${user.displayName}`
-      setTimeout(() => { document.querySelector('.v-log').style.display = 'none' }, 3000)
+      setTimeout(() => { document.querySelector('.v-log').style.display = 'none' }, 2000)
 
+      // Evento para crear una publicacion
       const btnCreatePost = divW.querySelector('#btn-publish')
       btnCreatePost.addEventListener('click', () => {
         const post = `
@@ -63,14 +63,13 @@ export const templateWall = () => {
             </div>
           </div>`
 
-
         const container = document.getElementById('posts')
         container.innerHTML = post
         container.querySelector('.user-name-post').textContent = `${user.displayName}`
 
+        // Evento para guardar en firestore la publicacion
         const btnPublish = container.querySelector('#send-post')
         btnPublish.addEventListener('click', () => {
-          // console.log("hola")
           const writePost = document.getElementById('write-post').value
           db.collection('muro').add({
             petname: user.displayName,
@@ -79,50 +78,60 @@ export const templateWall = () => {
           })
             .then((docRef) => {
               console.log('Document written with ID: ', docRef.id)
-
             })
             .catch((error) => {
               console.error('Error adding document: ', error)
             })
         })
-
       })
+
+      // Funcion para mostrar en el muro en tiempo real las publicaciones
       db.collection('muro').onSnapshot((querySnapshot) => {
-
         document.getElementById('posts').innerHTML = ''
-        querySnapshot.forEach((doc) => {
 
+        // Se obtiene la fecha de puclicacion
+        querySnapshot.forEach((doc) => {
           const date = new Date(doc.data().date && doc.data().date.seconds * 1000)
           const days = date.getDate()
           const month = date.getMonth() + 1
           const year = date.getFullYear()
 
-          //console.log(`${doc.id} => ${days}/${month}/${year} ${hours}:${minutes}:${seconds}`);
+          // Creacion del post
           document.getElementById('posts').innerHTML += `
-           <div class="container-posts">
-            <div id="title-post">
-            <h2 id = "pet-name" class = "user-name-post">${doc.data().petname}</h2>
-            <h3 id = "date-post">${days}/${month}/${year} </h3>
-          </div>
+             <div class="container-posts">
+              <div id="title-post">
+                <h2 id = "pet-name" class = "user-name-post">${doc.data().petname}</h2>
+                <h3 id = "date-post">${days}/${month}/${year} </h3>
+              </div>
 
-          <div id="write">
-            <p id="write-post" >${doc.data().post}</p>
-          </div>
+              <div id="write">
+                <p id="write-post" >${doc.data().post}</p>
+              </div>
 
-          <ul>
-          <li> <button type="button" id="btn-like"> <img src="img/like.png" alt="logo" class="img-btn-wall"></button> </li>
-          <li> <button type="button" class = "btns-crud" id="btn-delete"> <img src="img/delete.png" alt="logo" class="img-btn-wall"></button> </li>
-          <li> <button type="button" id="btn-edit">Edit</button> </li>
-          </ul>
-          </div>`
+              <ul>
+                <li> <button type="button" id="btn-like"> <img src="img/like.png" alt="logo" class="img-btn-wall"></button> </li>
+                <li> <button type="button" class = "btns-crud" id="btn-delete" data-id = "${doc.id}"> <img src="img/delete.png" alt="logo" class="img-btn-wall"></button> </li>
+                <li> <button type="button" id="btn-edit">Edit</button> </li>
+              </ul>
+            </div>`
+        })
 
-          const btnDelete = document.querySelector('.btns-crud')
-          btnDelete.addEventListener('click', () => deletePost(`${doc.id}`))
-          console.log(`${doc.id}`)
+        // Evento que permite al boton eliminar un post especifico
+        const btnDelete = document.querySelectorAll('.btns-crud')
+        btnDelete.forEach(elements => {
+          elements.addEventListener('click', () => deletePost(elements.dataset.id))
+        })
+      })
 
-        });
-      });
-      
+      // Funcion que permite elminar post
+      const deletePost = (id) => {
+        db.collection('muro').doc(id).delete()
+          .then(() => {
+            console.log('Document successfully deleted!')
+          }).catch((error) => {
+            console.error('Error removing document: ', error)
+          })
+      }
     } else {
       document.querySelector('.user-name-post').textContent = 'No toy logueado'
     }
@@ -145,4 +154,3 @@ export const templateWall = () => {
   // ----------------------------------------------------------------------------
   return divW
 }
-
