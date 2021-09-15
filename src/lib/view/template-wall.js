@@ -30,7 +30,7 @@ export const templateWall = () => {
   </header>
 
 
-  <h2 class = "v-log"></h2>
+  <div class = "v-log"></div>
   `
   // <h2 class = "user-name-post"></h2>
   // <p class = "user-text-post"></p>
@@ -54,7 +54,7 @@ export const templateWall = () => {
           <div class="container-posts">
             <div id="title-post">
               <h2 id = "pet-name" class = "user-name-post"></h2>
-              <h3 id = "date-post">c:</h3>
+              <h3 id = "date-post"></h3>
             </div>
 
             <div id="write">
