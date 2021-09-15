@@ -1,5 +1,4 @@
 import { login, loginGoogle } from '../firebase/fireFunctions.js'
-// import firebase from 'firebase'
 
 export const templateLogin = () => {
   const loginT = `
@@ -29,10 +28,8 @@ export const templateLogin = () => {
     login(email, pass)
       .then((userCredential) => {
         // const user = userCredential.user
-        // ...
       })
       .catch((error) => {
-        // const errorCode = error.code
         const errorMessage = error.message
         const fireError = document.getElementById('fire-error')
         fireError.textContent = errorMessage
@@ -66,15 +63,13 @@ export const templateLogin = () => {
         /** @type {firebase.auth.OAuthCredential} */
         const user = result.user
         console.log(user)
-        //location.hash = '#/Wall'
-        if (result.additionalUserInfo.isNewUser == true){
+        if (result.additionalUserInfo.isNewUser == true) {
           location.hash = '#/pet'
-        }else {
+        } else {
           location.hash = '#/Wall'
         }
-        console.log('user', result.additionalUserInfo.isNewUser)//se verifica si el ususario es nuevo o no 
+        console.log('user', result.additionalUserInfo.isNewUser)// se verifica si el ususario es nuevo o no
         console.log(user.displayName)
-        
       }).catch((error) => {
         // Handle Errors here.
         // const errorCode = error.code

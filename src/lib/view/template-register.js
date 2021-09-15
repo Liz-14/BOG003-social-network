@@ -1,5 +1,4 @@
 import { logOut, loginGoogle, register } from '../firebase/fireFunctions.js'
-// import firebase from 'firebase'
 
 export const templateRegister = () => {
   const registerT = `
