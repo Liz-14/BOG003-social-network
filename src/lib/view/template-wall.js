@@ -1,4 +1,5 @@
 import { logOut } from '../firebase/fireFunctions.js'
+import { modalDelete } from './deletePost.js'
 
 export const templateWall = () => {
   const wall = `
@@ -79,6 +80,7 @@ export const templateWall = () => {
           })
             .then((docRef) => {
               console.log('Document written with ID: ', docRef.id)
+              // db.collection('muro').orderBy('date', 'desc')
             })
             .catch((error) => {
               console.error('Error adding document: ', error)
@@ -87,7 +89,8 @@ export const templateWall = () => {
       })
 
       // Funcion para mostrar en el muro en tiempo real las publicaciones
-      db.collection('muro').onSnapshot((querySnapshot) => {
+      db.collection('muro').orderBy('date', 'desc').onSnapshot((querySnapshot) => {
+
         document.getElementById('posts').innerHTML = ''
 
         // Se obtiene la fecha de puclicacion
@@ -112,17 +115,97 @@ export const templateWall = () => {
               <ul>
                 <li> <button type="button" id="btn-like"> <img src="img/like.png" alt="logo" class="img-btn-wall"></button> </li>
                 <li> <button type="button" class = "btns-crud" id="btn-delete" data-id = "${doc.id}"> <img src="img/delete.png" alt="logo" class="img-btn-wall"></button> </li>
-                <li> <button type="button" id="btn-edit"><img src="img/edit.png" alt="logo" class="img-btn-wall"></button> </li>
+                <li> <button type="button" class = "btn-post-edit" data-post ="${doc.data().post}" id="btn-edit"><img src="img/edit.png" alt="logo" class="img-btn-wall"></button> </li>
               </ul>
             </div>`
         })
 
-        // Evento que permite al boton eliminar un post especifico
-        const btnDelete = document.querySelectorAll('.btns-crud')
-        btnDelete.forEach(elements => {
-          elements.addEventListener('click', () => deletePost(elements.dataset.id))
+          //Evento editar post
+      const btnEdit = document.querySelectorAll('.btn-post-edit')
+      btnEdit.forEach(elements => {
+      console.log(elements)
+
+
+        const contentPost = elements.dataset.post
+        console.log(contentPost)
+
+        elements.addEventListener('click', () => {
+
+          const post = `
+        <div class="container-posts">
+          <div id="title-post">
+            <h2 id = "pet-name" class = "user-name-post"></h2>
+            <h3 id = "date-post"></h3>
+          </div>
+
+          <div id="write">
+            <textarea id="write-post" placeholder= "¿Qué hiciste hoy?"></textarea>
+            <button type="button" id="send-post" class="btn-p">Editar</button>
+          </div>
+        </div>`
+
+          const container = document.getElementById('posts')
+          container.innerHTML = post
+          container.querySelector('.user-name-post').textContent = `${user.displayName}`
+          console.log(elements.dataset.id)
+
+          var docRef = db.collection('muro').doc(id);
+
+          docRef.get().then((doc) => {
+            if (doc.exists) {
+              console.log("Document data:", doc.data());
+            } else {
+              // doc.data() will be undefined in this case
+              console.log("No such document!");
+            }
+          }).catch((error) => {
+            console.log("Error getting document:", error);
+          });
+
         })
       })
+
+      // Evento que permite al boton eliminar un post especifico
+      const btnDelete = document.querySelectorAll('.btns-crud')
+      btnDelete.forEach(elements => {
+        elements.addEventListener('click', () => {
+
+          const wSection = document.getElementById('w-section')
+          wSection.insertBefore(modalDelete(), wSection.childNodes[0])
+
+          const btnAceptDelete = document.getElementById('btn-acept-delete')
+          btnAceptDelete.addEventListener('click', () => {
+            deletePost(elements.dataset.id)
+            wSection.removeChild(document.getElementById('modale-delete'))
+          })
+        })
+      })
+
+
+      })
+
+    
+
+      // Funcion para editar post
+      const editPost = (id, post) => {
+
+
+
+        document.getElementById('write-post').value = post
+        let collectionRef = db.collection('muro').doc(id);
+
+        // Set the "capital" field of the city 'DC'
+        return collectionRef.update({
+          post: writePost
+        })
+          .then(() => {
+            console.log("Document successfully updated!");
+          })
+          .catch((error) => {
+            // The document probably doesn't exist.
+            console.error("Error updating document: ", error);
+          });
+      }
 
       // Funcion que permite elminar post
       const deletePost = (id) => {
