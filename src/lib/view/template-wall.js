@@ -1,4 +1,5 @@
 import { logOut } from '../firebase/fireFunctions.js'
+// import { modalDelete } from './deletePost.js'
 
 export const templateWall = () => {
   const wall = `
@@ -75,7 +76,8 @@ export const templateWall = () => {
           db.collection('muro').add({
             petname: user.displayName,
             post: writePost,
-            date: firebase.firestore.FieldValue.serverTimestamp()
+            date: firebase.firestore.FieldValue.serverTimestamp(),
+            likes: []
           })
             .then((docRef) => {
               console.log('Document written with ID: ', docRef.id)
@@ -134,7 +136,7 @@ export const templateWall = () => {
           })
       }
     } else {
-      document.querySelector('.user-name-post').textContent = 'No toy logueado'
+      document.querySelector('.v-log').innerHTML = '<h2>Hola, necesitas loguearte</h2>'
     }
   })
 

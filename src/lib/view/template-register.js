@@ -113,7 +113,11 @@ export const templateRegister = () => {
         // The signed-in user info.
         const user = result.user
         console.log('user', user)
-        location.hash = '#/Wall'
+        if (result.additionalUserInfo.isNewUser === true) {
+          location.hash = '#/pet'
+        } else {
+          location.hash = '#/Wall'
+        }
       // ...
       }).catch((error) => {
       // Handle Errors here.
