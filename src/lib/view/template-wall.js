@@ -88,111 +88,108 @@ export const templateWall = () => {
         })
       })
 
-      // Funcion para mostrar en el muro en tiempo real las publicaciones
-      db.collection('muro').orderBy('date', 'desc').onSnapshot((querySnapshot) => {
+      const showPost = () => {
+        // Funcion para mostrar en el muro en tiempo real las publicaciones
+        db.collection('muro').orderBy('date', 'desc').onSnapshot((querySnapshot) => {
 
-        document.getElementById('posts').innerHTML = ''
+          document.getElementById('posts').innerHTML = ''
 
-        // Se obtiene la fecha de puclicacion
-        querySnapshot.forEach((doc) => {
-          const date = new Date(doc.data().date && doc.data().date.seconds * 1000)
-          const days = date.getDate()
-          const month = date.getMonth() + 1
-          const year = date.getFullYear()
+          // Se obtiene la fecha de puclicacion
+          querySnapshot.forEach((doc) => {
+            const date = new Date(doc.data().date && doc.data().date.seconds * 1000)
+            const days = date.getDate()
+            const month = date.getMonth() + 1
+            const year = date.getFullYear()
 
-          // Creacion del post
-          document.getElementById('posts').innerHTML += `
-             <div class="container-posts">
-              <div id="title-post">
-                <h2 id = "pet-name" class = "user-name-post">${doc.data().petname}</h2>
-                <h3 id = "date-post">${days}/${month}/${year} </h3>
-              </div>
-
-              <div id="write">
-                <p id="write-post" >${doc.data().post}</p>
-              </div>
-
-              <ul>
-                <li> <button type="button" id="btn-like"> <img src="img/like.png" alt="logo" class="img-btn-wall"></button> </li>
-                <li> <button type="button" class = "btns-crud" id="btn-delete" data-id = "${doc.id}"> <img src="img/delete.png" alt="logo" class="img-btn-wall"></button> </li>
-                <li> <button type="button" class = "btn-post-edit" data-post ="${doc.data().post}" id="btn-edit"><img src="img/edit.png" alt="logo" class="img-btn-wall"></button> </li>
-              </ul>
-            </div>`
-        })
+            // Creacion del post
+            document.getElementById('posts').innerHTML += `
+               <div class="container-posts">
+                <div id="title-post">
+                  <h2 id = "pet-name" class = "user-name-post">${doc.data().petname}</h2>
+                  <h3 id = "date-post">${days}/${month}/${year} </h3>
+                </div>
+  
+                <div id="write">
+                  <p id="write-post" >${doc.data().post}</p>
+                </div>
+  
+                <ul>
+                  <li> <button type="button" id="btn-like"> <img src="img/like.png" alt="logo" class="img-btn-wall"></button> </li>
+                  <li> <button type="button" class = "btns-crud" id="btn-delete" data-id = "${doc.id}"> <img src="img/delete.png" alt="logo" class="img-btn-wall"></button> </li>
+                  <li> <button type="button" class = "btn-post-edit" data-post ="${doc.data().post}" data-id = "${doc.id}" id="btn-edit"><img src="img/edit.png" alt="logo" class="img-btn-wall"></button> </li>
+                </ul>
+              </div>`
+          })
 
           //Evento editar post
-      const btnEdit = document.querySelectorAll('.btn-post-edit')
-      btnEdit.forEach(elements => {
-      console.log(elements)
+          const btnEdit = document.querySelectorAll('.btn-post-edit')
+          btnEdit.forEach(elements => {
 
+            const contentPost = elements.dataset.post
+            console.log(contentPost)
 
-        const contentPost = elements.dataset.post
-        console.log(contentPost)
+            elements.addEventListener('click', () => {
 
-        elements.addEventListener('click', () => {
+              const post = `
+          <div class="container-posts">
+            <div id="title-post">
+              <h2 id = "pet-name" class = "user-name-post"></h2>
+              <h3 id = "date-post"></h3>
+            </div>
+  
+            <div id="write">
+              <textarea id="write-post" placeholder= "¿Qué hiciste hoy?">${contentPost}</textarea>
+              <button type="button" id="send-edit-post" class="btn-p">Editar</button>
+              <button type="button" id="exit" class="btn-p">Salir</button>
+            </div>
+          </div>`
 
-          const post = `
-        <div class="container-posts">
-          <div id="title-post">
-            <h2 id = "pet-name" class = "user-name-post"></h2>
-            <h3 id = "date-post"></h3>
-          </div>
+              const container = document.getElementById('posts')
+              container.innerHTML = post
+              container.querySelector('.user-name-post').textContent = `${user.displayName}`
 
-          <div id="write">
-            <textarea id="write-post" placeholder= "¿Qué hiciste hoy?"></textarea>
-            <button type="button" id="send-post" class="btn-p">Editar</button>
-          </div>
-        </div>`
+              const aceptEdit = document.getElementById('send-edit-post')
+              aceptEdit.addEventListener('click', () => {
+                editPost(elements.dataset.id, contentPost)
+                console.log('id evento' + elements.dataset.id)
+              })
 
-          const container = document.getElementById('posts')
-          container.innerHTML = post
-          container.querySelector('.user-name-post').textContent = `${user.displayName}`
-          console.log(elements.dataset.id)
+              exit()
 
-          var docRef = db.collection('muro').doc(id);
-
-          docRef.get().then((doc) => {
-            if (doc.exists) {
-              console.log("Document data:", doc.data());
-            } else {
-              // doc.data() will be undefined in this case
-              console.log("No such document!");
-            }
-          }).catch((error) => {
-            console.log("Error getting document:", error);
-          });
-
-        })
-      })
-
-      // Evento que permite al boton eliminar un post especifico
-      const btnDelete = document.querySelectorAll('.btns-crud')
-      btnDelete.forEach(elements => {
-        elements.addEventListener('click', () => {
-
-          const wSection = document.getElementById('w-section')
-          wSection.insertBefore(modalDelete(), wSection.childNodes[0])
-
-          const btnAceptDelete = document.getElementById('btn-acept-delete')
-          btnAceptDelete.addEventListener('click', () => {
-            deletePost(elements.dataset.id)
-            wSection.removeChild(document.getElementById('modale-delete'))
+            })
           })
+
+          // Evento que permite al boton eliminar un post especifico
+          const btnDelete = document.querySelectorAll('.btns-crud')
+          btnDelete.forEach(elements => {
+            elements.addEventListener('click', () => {
+
+              const wSection = document.getElementById('w-section')
+              wSection.insertBefore(modalDelete(), wSection.childNodes[0])
+
+              const btnAceptDelete = document.getElementById('btn-acept-delete')
+              btnAceptDelete.addEventListener('click', () => {
+                deletePost(elements.dataset.id)
+                wSection.removeChild(document.getElementById('modale-delete'))
+              })
+            })
+          })
+
+
         })
-      })
+      }
 
-
-      })
-
-    
+      showPost()
 
       // Funcion para editar post
       const editPost = (id, post) => {
 
+        console.log('id funcion: ' + id)
 
-
-        document.getElementById('write-post').value = post
+        const writePost = document.getElementById('write-post').value
         let collectionRef = db.collection('muro').doc(id);
+
+        console.log(writePost)
 
         // Set the "capital" field of the city 'DC'
         return collectionRef.update({
@@ -220,6 +217,16 @@ export const templateWall = () => {
       document.querySelector('.user-name-post').textContent = 'No toy logueado'
     }
   })
+
+  const exit = () => {
+
+    const btnExit = document.getElementById('exit')
+    btnExit.addEventListener('click', () => {
+      document.querySelector('#posts').innerHTML = ''
+      showPost()
+
+    })
+  }
 
   const btnLogoutMobile = divW.querySelector('#btn-logout-mobile')
   btnLogoutMobile.addEventListener('click', () => {
