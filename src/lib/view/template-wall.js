@@ -62,13 +62,15 @@ export const templateWall = () => {
             <div id="write">
               <textarea id="write-post" placeholder= "¿Qué hiciste hoy?"></textarea>
               <button type="button" id="send-post" class="btn-p">Publicar</button>
+              <button type="button" id="exit" class="btn-p">Salir</button>
+
             </div>
           </div>`
 
         const container = document.getElementById('posts')
         container.innerHTML = post
         container.querySelector('.user-name-post').textContent = `${user.displayName}`
-
+        exit()
         // Evento para guardar en firestore la publicacion
         const btnPublish = container.querySelector('#send-post')
         btnPublish.addEventListener('click', () => {
@@ -167,6 +169,8 @@ export const templateWall = () => {
               const wSection = document.getElementById('w-section')
               wSection.insertBefore(modalDelete(), wSection.childNodes[0])
 
+              exit()
+
               const btnAceptDelete = document.getElementById('btn-acept-delete')
               btnAceptDelete.addEventListener('click', () => {
                 deletePost(elements.dataset.id)
@@ -180,6 +184,17 @@ export const templateWall = () => {
       }
 
       showPost()
+
+      const exit = () => {
+
+        const btnExit = document.getElementById('exit')
+        btnExit.addEventListener('click', () => {
+          document.querySelector('#posts').innerHTML = ''
+          document.querySelector('#modale-delete'&&'#modale-delete').innerHTML = ''
+          showPost()
+    
+        })
+      }
 
       // Funcion para editar post
       const editPost = (id, post) => {
@@ -217,16 +232,6 @@ export const templateWall = () => {
       document.querySelector('.user-name-post').textContent = 'No toy logueado'
     }
   })
-
-  const exit = () => {
-
-    const btnExit = document.getElementById('exit')
-    btnExit.addEventListener('click', () => {
-      document.querySelector('#posts').innerHTML = ''
-      showPost()
-
-    })
-  }
 
   const btnLogoutMobile = divW.querySelector('#btn-logout-mobile')
   btnLogoutMobile.addEventListener('click', () => {
