@@ -174,13 +174,11 @@ a {
   background-size: cover;
   width: 100vw;
   min-height: 100vh;
-  position: relative;
 }
 
 #mobile-header{
   padding-bottom: 1%;
   width: 100vw;
-  /*position: fixed;*/
   display: flex;
   justify-content: space-between;
   background-image: url(./img/backHeader.png);
@@ -230,7 +228,6 @@ li {
 #w-container ul{
   display: flex;
   justify-content: space-around;
-  position: relative;
 }
 
 #w-container li{
@@ -306,7 +303,6 @@ li {
 }
 
 #posts {
-  position: absolute;
   align-items: center;
   justify-content: flex-start;
   display: flex;
@@ -316,8 +312,11 @@ li {
   width: 100%;
 }
 
+#posts-pc{
+  display: none;
+}
+
 .container-posts {
-  position: relative;
   margin-bottom: 5%;
   background-color: #FFECE2;
   border-radius: 15px;
@@ -325,7 +324,6 @@ li {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  /*opacity: 0;*/
 }
 
 #title-post{
