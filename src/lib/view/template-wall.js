@@ -62,7 +62,7 @@ export const templateWall = () => {
             <div id="write">
               <textarea id="write-post" placeholder= "¿Qué hiciste hoy?"></textarea>
               <button type="button" id="send-post" class="btn-p">Publicar</button>
-              <button type="button" id="exit" class="btn-p">Salir</button>
+              <button type="button" id="exit-edit" class="btn-p">Salir</button>
 
             </div>
           </div>`
@@ -142,7 +142,7 @@ export const templateWall = () => {
             <div id="write">
               <textarea id="write-post" placeholder= "¿Qué hiciste hoy?">${contentPost}</textarea>
               <button type="button" id="send-edit-post" class="btn-p">Editar</button>
-              <button type="button" id="exit" class="btn-p">Salir</button>
+              <button type="button" id="exit-edit" class="btn-p">Salir</button>
             </div>
           </div>`
 
@@ -169,12 +169,17 @@ export const templateWall = () => {
               const wSection = document.getElementById('w-section')
               wSection.insertBefore(modalDelete(), wSection.childNodes[0])
 
-              exit()
+              //exit()
 
               const btnAceptDelete = document.getElementById('btn-acept-delete')
               btnAceptDelete.addEventListener('click', () => {
                 deletePost(elements.dataset.id)
                 wSection.removeChild(document.getElementById('modale-delete'))
+              })
+
+              const exitDelete = document.querySelector('#exit')
+              exitDelete.addEventListener('click', () => {
+                document.querySelector('#modale-delete' && '#modale-delete').style.display = 'none'//innerHTML = ''
               })
             })
           })
@@ -187,12 +192,13 @@ export const templateWall = () => {
 
       const exit = () => {
 
-        const btnExit = document.getElementById('exit')
+        const btnExit = document.querySelector('#exit-edit')
         btnExit.addEventListener('click', () => {
           document.querySelector('#posts').innerHTML = ''
-          document.querySelector('#modale-delete'&&'#modale-delete').innerHTML = ''
           showPost()
-    
+          //document.querySelector('#modale-delete'&&'#modale-delete').style.display='none'//innerHTML = ''
+          //showPost()
+
         })
       }
 
