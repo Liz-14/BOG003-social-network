@@ -11,7 +11,7 @@ export const templateWall = () => {
   <nav id = "mobile-nav">
     <ul>
       <li> <button type="button" id="btn-home"> <a href="#"> <img src="img/home.png" alt="logo" class="img-btn-nav"> </a> </button> </li>
-      <li> <button type="button" id="btn-publish"> <img src="img/publish.png" alt="logo" class="img-btn-nav"></button> </li>
+      <li> <button type="button" id="btn-publish" class = "btn-post-now" > <img src="img/publish.png" alt="logo" class="img-btn-nav"></button> </li>
       <li> <button type="button" id="btn-perfil"> <a href="#"> <img src="img/perfil.png" alt="logo" class="img-btn-nav" id="img-perfil"> </a> </button> </li>
     </ul>
   </nav>
@@ -24,12 +24,13 @@ export const templateWall = () => {
     <nav id = "pc-nav">
       <ul>
         <li> <button type="button" id="btn-home-pc"> <a href="#"> <img src="img/home.png" alt="logo" class="img-btn-nav"> </a> </button> </li>
-        <li> <button type="button" id="btn-publish-pc"> <a href="#"> <img src="img/publish.png" alt="logo" class="img-btn-nav"> </a> </button> </li>
+        <li> <button type="button" id="btn-publish-pc" class = "btn-post-now"> <img src="img/publish.png" alt="logo" class="img-btn-nav"> </button> </li>
         <li> <button type="button" id="btn-perfil-pc"> <a href="#"> <img src="img/perfil.png" alt="logo" class="img-btn-nav" id="img-perfil"> </a> </button> </li>
       </ul>
     </nav>
   </header>
 
+  <section id = "posts-pc"></section>
 
   <div class = "v-log"></div>
   `
@@ -50,42 +51,48 @@ export const templateWall = () => {
       setTimeout(() => { document.querySelector('.v-log').style.display = 'none' }, 2000)
 
       // Evento para crear una publicacion
-      const btnCreatePost = divW.querySelector('#btn-publish')
-      btnCreatePost.addEventListener('click', () => {
-        const post = `
-          <div class="container-posts">
-            <div id="title-post">
-              <h2 id = "pet-name" class = "user-name-post"></h2>
-              <h3 id = "date-post"></h3>
-            </div>
+      const btnCreatePost = divW.querySelectorAll('.btn-post-now')
+      btnCreatePost.forEach(elements => {
+        elements.addEventListener('click', () => {
+          const post = `
+            <div class="container-posts">
+              <div id="title-post">
+                <h2 id = "pet-name" class = "user-name-post">${user.displayName}</h2>
+                <h3 id = "date-post"></h3>
+              </div>
 
-            <div id="write">
-              <textarea id="write-post" placeholder= "¿Qué hiciste hoy?"></textarea>
-              <button type="button" id="send-post" class="btn-p">Publicar</button>
-            </div>
-          </div>`
+              <div id="write">
+                <textarea id="write-post" placeholder= "¿Qué hiciste hoy?"></textarea>
+                <button type="button" id="send-post" class="btn-p">Publicar</button>
+                <button type="button" id = "exit"  class="btn-p btn-exit">Salir</button>
 
-        const container = document.getElementById('posts')
-        container.innerHTML = post
-        container.querySelector('.user-name-post').textContent = `${user.displayName}`
+              </div>
+            </div>`
 
-        // Evento para guardar en firestore la publicacion
-        const btnPublish = container.querySelector('#send-post')
-        btnPublish.addEventListener('click', () => {
-          const writePost = document.getElementById('write-post').value
-          db.collection('muro').add({
-            petname: user.displayName,
-            post: writePost,
-            date: firebase.firestore.FieldValue.serverTimestamp(),
-            likes: []
+          const container = document.getElementById('posts')
+          const containerPc = document.getElementById('posts-pc')
+          container.innerHTML = post
+          containerPc.innerHTML = post
+          exit()
+
+          // Evento para guardar en firestore la publicacion
+          const btnPublish = container.querySelector('#send-post')
+          btnPublish.addEventListener('click', () => {
+            const writePost = document.getElementById('write-post').value
+            db.collection('muro').add({
+              petname: user.displayName,
+              post: writePost,
+              date: firebase.firestore.FieldValue.serverTimestamp(),
+              likes: []
+            })
+              .then((docRef) => {
+                console.log('Document written with ID: ', docRef.id)
+                // db.collection('muro').orderBy('date', 'desc')
+              })
+              .catch((error) => {
+                console.error('Error adding document: ', error)
+              })
           })
-            .then((docRef) => {
-              console.log('Document written with ID: ', docRef.id)
-              // db.collection('muro').orderBy('date', 'desc')
-            })
-            .catch((error) => {
-              console.error('Error adding document: ', error)
-            })
         })
       })
 
@@ -93,6 +100,7 @@ export const templateWall = () => {
         // Funcion para mostrar en el muro en tiempo real las publicaciones
         db.collection('muro').orderBy('date', 'desc').onSnapshot((querySnapshot) => {
           document.getElementById('posts').innerHTML = ''
+          document.getElementById('posts-pc').innerHTML = ''
 
           // Se obtiene la fecha de puclicacion
           querySnapshot.forEach((doc) => {
@@ -102,7 +110,7 @@ export const templateWall = () => {
             const year = date.getFullYear()
 
             // Creacion del post
-            document.getElementById('posts').innerHTML += `
+            const createPost = `
                <div class="container-posts">
                 <div id="title-post">
                   <h2 id = "pet-name" class = "user-name-post">${doc.data().petname}</h2>
@@ -119,37 +127,38 @@ export const templateWall = () => {
                   <li> <button type="button" class = "btn-post-edit" data-post ="${doc.data().post}" data-id = "${doc.id}" id="btn-edit"><img src="img/edit.png" alt="logo" class="img-btn-wall"></button> </li>
                 </ul>
               </div>`
+            document.getElementById('posts').innerHTML += createPost
+            document.getElementById('posts-pc').innerHTML += createPost
           })
 
           // Evento editar post
           const btnEdit = document.querySelectorAll('.btn-post-edit')
           btnEdit.forEach(elements => {
             const contentPost = elements.dataset.post
-            console.log(contentPost)
 
             elements.addEventListener('click', () => {
               const post = `
-          <div class="container-posts">
-            <div id="title-post">
-              <h2 id = "pet-name" class = "user-name-post"></h2>
-              <h3 id = "date-post"></h3>
-            </div>
+                <div class="container-posts">
+                  <div id="title-post">
+                    <h2 id = "pet-name" class = "user-name-post">${user.displayName}</h2>
+                    <h3 id = "date-post"></h3>
+                  </div>
 
-            <div id="write">
-              <textarea id="write-post" placeholder= "¿Qué hiciste hoy?">${contentPost}</textarea>
-              <button type="button" id="send-edit-post" class="btn-p">Editar</button>
-              <button type="button" id="exit" class="btn-p">Salir</button>
-            </div>
-          </div>`
+                  <div id="write">
+                    <textarea id="write-post" placeholder= "¿Qué hiciste hoy?">${contentPost}</textarea>
+                    <button type="button" id="send-edit-post" class="btn-p">Editar</button>
+                    <button type="button" id="exit" class="btn-p btn-exit">Salir</button>
+                  </div>
+                </div>`
 
               const container = document.getElementById('posts')
+              const containerPc = document.getElementById('posts-pc')
               container.innerHTML = post
-              container.querySelector('.user-name-post').textContent = `${user.displayName}`
+              containerPc.innerHTML = post
 
               const aceptEdit = document.getElementById('send-edit-post')
               aceptEdit.addEventListener('click', () => {
                 editPost(elements.dataset.id, contentPost)
-                console.log('id evento' + elements.dataset.id)
               })
 
               exit()
@@ -163,6 +172,8 @@ export const templateWall = () => {
               const wSection = document.getElementById('w-section')
               wSection.insertBefore(modalDelete(), wSection.childNodes[0])
 
+              exit()
+
               const btnAceptDelete = document.getElementById('btn-acept-delete')
               btnAceptDelete.addEventListener('click', () => {
                 deletePost(elements.dataset.id)
@@ -175,14 +186,27 @@ export const templateWall = () => {
 
       showPost()
 
+      const exit = () => {
+        const btnExit = document.querySelectorAll('.btn-exit')
+        btnExit.forEach((elements, i) => {
+          elements.addEventListener('click', () => {
+            document.querySelector('#posts').innerHTML = ''
+            document.querySelector('#posts-pc').innerHTML = ''
+            if (document.getElementsByClassName('delete-modal')[i]) {
+              document.getElementById('w-section').removeChild(document.getElementsByClassName('delete-modal')[i])
+            }
+            // document.getElementById('w-section').removeChild(document.getElementsByClassName('delete-modal')[i])
+            // document.getElementsByClassName('delete-modal')[i].innerHTML = ''
+            // document.querySelectorAll('.delete-modal' && '.delete-modal').innerHTML = ''
+            showPost()
+          })
+        })
+      }
+
       // Funcion para editar post
       const editPost = (id, post) => {
-        console.log('id funcion: ' + id)
-
         const writePost = document.getElementById('write-post').value
         const collectionRef = db.collection('muro').doc(id)
-
-        console.log(writePost)
 
         // Set the "capital" field of the city 'DC'
         return collectionRef.update({
@@ -210,14 +234,6 @@ export const templateWall = () => {
       document.querySelector('.v-log').innerHTML = '<h2>Hola, necesitas loguearte</h2>'
     }
   })
-
-  const exit = () => {
-    const btnExit = document.getElementById('exit')
-    btnExit.addEventListener('click', () => {
-      document.querySelector('#posts').innerHTML = ''
-      showPost()
-    })
-  }
 
   const btnLogoutMobile = divW.querySelector('#btn-logout-mobile')
   btnLogoutMobile.addEventListener('click', () => {

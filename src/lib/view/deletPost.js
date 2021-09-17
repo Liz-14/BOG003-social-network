@@ -5,7 +5,8 @@ export const modalDelete = () => {
   `
 
   const divModal = document.createElement('div')
-  divModal.id = 'modale-delete'
+  divModal.className = 'delete-modal'
+
   divModal.innerHTML = modal
 
   return divModal
