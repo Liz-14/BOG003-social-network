@@ -1,5 +1,5 @@
 /* ---------- Laptop 1440 x 900 ---------- */
-@media(min-width:415px){
+@media(min-width:450px){
   main{
     background-image: url(./img/backgroundPC1.png);
     padding-bottom: 1.6%
@@ -60,6 +60,7 @@
     padding-bottom: 2.5%;
     position: fixed;
     width: 100vw;
+    top: 0;
   }
 
   #pc-nav{
@@ -91,6 +92,7 @@
 
   #w-container ul{
     justify-content: flex-end;
+    margin: 1.5%;
   }
 
   #w-container li{
@@ -129,16 +131,25 @@
     justify-content: center;
     display: flex;
     margin-top: 20%;
-    height: 30%;
     width: 100%;
+    display: none;
   }
 
+    #posts-pc{
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      margin-top: 12%;
+      width: 100%;
+    }
+
   .container-posts {
-    position: relative;
     background-color: #FFECE2;
     border-radius: 15px;
     width: 40%;
     height: 90%;
+    margin-bottom: 1.5%
   }
 
   #posts ul {
@@ -174,6 +185,22 @@
     position: absolute;
     margin-top: 35%;
     right: 40%;
+  }
+
+  .v-log{
+    margin-top: 15%;
+    margin-left: 40%;
+  }
+
+  #title-post h3{
+    margin-bottom: 2.9%;
+    margin-top: 2%;;
+    padding-bottom: 1%;
+    width: 5vw;
+  }
+
+  h2.user-name-post{
+    margin-top: 1.5%;
   }
 }
 
@@ -226,4 +253,6 @@
 #img-perfil{
     width: 4.2vw;
   }
+
+
 }

@@ -63,7 +63,7 @@ export const templateLogin = () => {
         /** @type {firebase.auth.OAuthCredential} */
         const user = result.user
         console.log(user)
-        if (result.additionalUserInfo.isNewUser == true) {
+        if (result.additionalUserInfo.isNewUser === true) {
           location.hash = '#/pet'
         } else {
           location.hash = '#/Wall'
