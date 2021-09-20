@@ -17,3 +17,11 @@ export const logOut = () => {
   return firebase.auth().signOut()
 }
 
+export const updateLikes = (uid, idPost) => firebase.firestore().collection('muro').doc(idPost).update(({
+  likes: firebase.firestore.FieldValue.arrayUnion(uid),
+}));
+
+export const removeLikes = (uid, idPost) => firebase.firestore().collection('muro').doc(idPost).update(({
+  likes: firebase.firestore.FieldValue.arrayRemove(uid),
+}));
+

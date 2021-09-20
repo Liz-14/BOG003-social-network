@@ -1,5 +1,11 @@
-import { logOut } from '../firebase/fireFunctions.js'
+import {
+  logOut,
+  removeLikes,
+  updateLikes
+} from '../firebase/fireFunctions.js'
+
 import { modalDelete } from './deletePost.js'
+
 
 export const templateWall = () => {
   const wall = `
@@ -63,8 +69,10 @@ export const templateWall = () => {
 
               <div id="write">
                 <textarea id="write-post" placeholder= "¿Qué hiciste hoy?"></textarea>
+                <div id="btn-write">
                 <button type="button" id="send-post" class="btn-p">Publicar</button>
-                <button type="button" id = "exit"  class="btn-p btn-exit">Salir</button>
+                <button type="button" id = "exit"  class="btn-exit-write btn-exit">Salir</button>
+                </div>
 
               </div>
             </div>`
@@ -122,7 +130,7 @@ export const templateWall = () => {
                 </div>
 
                 <ul>
-                  <li> <button type="button" id="btn-like"> <img src="img/like.png" alt="logo" class="img-btn-wall"></button> </li>
+                  <li> <button type="button" id="btn-like" data-id = "${doc.id}" class = "btn-like-post"> <img src="img/like.png" alt="logo" class="img-btn-wall"><span id ="nolike">${doc.data().likes.length}</span></button> </li>
                   <li> <button type="button" class = "btns-crud" id="btn-delete" data-id = "${doc.id}"> <img src="img/delete.png" alt="logo" class="img-btn-wall"></button> </li>
                   <li> <button type="button" class = "btn-post-edit" data-post ="${doc.data().post}" data-id = "${doc.id}" id="btn-edit"><img src="img/edit.png" alt="logo" class="img-btn-wall"></button> </li>
                 </ul>
@@ -131,6 +139,29 @@ export const templateWall = () => {
             document.getElementById('posts-pc').innerHTML += createPost
           })
 
+          //Evento like
+          const btnLike = document.querySelectorAll('.btn-like-post')
+          btnLike.forEach(elements => {
+            const idPost = elements.dataset.id
+            const currentUser = firebase.auth().currentUser.uid
+
+            elements.addEventListener('click', () => {
+           
+              db.collection('muro').get().then((snapshot) => {
+                snapshot.docs.forEach(doc => {
+                  const arrLikes = doc.data().likes
+                  if (arrLikes.includes(currentUser)) {
+                    console.log(currentUser)
+                    console.log(idPost)
+                   console.log(removeLikes(currentUser, idPost))
+                  } else {
+                    console.log(updateLikes(currentUser, idPost))
+                  }
+                })
+              })
+            })
+          })
+          
           // Evento editar post
           const btnEdit = document.querySelectorAll('.btn-post-edit')
           btnEdit.forEach(elements => {
@@ -146,8 +177,10 @@ export const templateWall = () => {
 
                   <div id="write">
                     <textarea id="write-post" placeholder= "¿Qué hiciste hoy?">${contentPost}</textarea>
+                    <div id="btn-edit-post">
                     <button type="button" id="send-edit-post" class="btn-p">Editar</button>
                     <button type="button" id="exit" class="btn-p btn-exit">Salir</button>
+                    </div>
                   </div>
                 </div>`
 
@@ -200,7 +233,7 @@ export const templateWall = () => {
             if (document.getElementsByClassName('delete-modal')[i]) {
               document.getElementById('w-section').removeChild(document.getElementsByClassName('delete-modal')[i])
             }
-          
+
             showPost()
           })
         })
@@ -208,10 +241,10 @@ export const templateWall = () => {
 
       // Funcion para editar post
       const editPost = (id, post) => {
+
         const writePost = document.getElementById('write-post').value
         const collectionRef = db.collection('muro').doc(id)
 
-        // Set the "capital" field of the city 'DC'
         return collectionRef.update({
           post: writePost
         })
@@ -233,6 +266,7 @@ export const templateWall = () => {
             console.error('Error removing document: ', error)
           })
       }
+
     } else {
       document.querySelector('.v-log').innerHTML = '<h2>Hola, necesitas loguearte</h2>'
     }
