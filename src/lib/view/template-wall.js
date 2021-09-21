@@ -6,7 +6,6 @@ import {
 
 import { modalDelete } from './deletePost.js'
 
-
 export const templateWall = () => {
   const wall = `
   <header id = "mobile-header">
@@ -139,29 +138,26 @@ export const templateWall = () => {
             document.getElementById('posts-pc').innerHTML += createPost
           })
 
-          //Evento like
+          // Evento like
           const btnLike = document.querySelectorAll('.btn-like-post')
-          btnLike.forEach(elements => {
-            const idPost = elements.dataset.id
-            const currentUser = firebase.auth().currentUser.uid
+          const currentUser = firebase.auth().currentUser.uid
 
+          btnLike.forEach(elements => {
             elements.addEventListener('click', () => {
-           
-              db.collection('muro').get().then((snapshot) => {
-                snapshot.docs.forEach(doc => {
-                  const arrLikes = doc.data().likes
-                  if (arrLikes.includes(currentUser)) {
-                    console.log(currentUser)
-                    console.log(idPost)
-                   console.log(removeLikes(currentUser, idPost))
-                  } else {
-                    console.log(updateLikes(currentUser, idPost))
-                  }
-                })
+              const idPost = elements.dataset.id
+              db.collection('muro').doc(idPost).get().then((doc) => {
+                const arrLikes = doc.data().likes
+                if (arrLikes.includes(currentUser)) {
+                  removeLikes(currentUser, idPost)
+                } else {
+                  updateLikes(currentUser, idPost)
+                }
+              }).catch((error) => {
+                console.log('Error getting document:', error)
               })
             })
           })
-          
+
           // Evento editar post
           const btnEdit = document.querySelectorAll('.btn-post-edit')
           btnEdit.forEach(elements => {
@@ -205,7 +201,7 @@ export const templateWall = () => {
               const wSection = document.getElementById('w-section')
               wSection.insertBefore(modalDelete(), wSection.childNodes[0])
 
-              //exit()
+              // exit()
 
               const btnAceptDelete = document.getElementById('btn-acept-delete')
               btnAceptDelete.addEventListener('click', () => {
@@ -215,7 +211,7 @@ export const templateWall = () => {
 
               const exitDelete = document.querySelector('#exit')
               exitDelete.addEventListener('click', () => {
-                document.querySelector('#modale-delete' && '#modale-delete').style.display = 'none'//innerHTML = ''
+                document.querySelector('#modale-delete' && '#modale-delete').style.display = 'none'// innerHTML = ''
               })
             })
           })
@@ -241,7 +237,6 @@ export const templateWall = () => {
 
       // Funcion para editar post
       const editPost = (id, post) => {
-
         const writePost = document.getElementById('write-post').value
         const collectionRef = db.collection('muro').doc(id)
 
@@ -266,7 +261,6 @@ export const templateWall = () => {
             console.error('Error removing document: ', error)
           })
       }
-
     } else {
       document.querySelector('.v-log').innerHTML = '<h2>Hola, necesitas loguearte</h2>'
     }
@@ -285,7 +279,6 @@ export const templateWall = () => {
     logOut()
     location.hash = '#/'
   })
-
   // ----------------------------------------------------------------------------
   return divW
 }
