@@ -147,11 +147,13 @@ export const templateWall = () => {
               const idPost = elements.dataset.id
               db.collection('muro').doc(idPost).get().then((doc) => {
                 const arrLikes = doc.data().likes
+
                 if (arrLikes.includes(currentUser)) {
                   removeLikes(currentUser, idPost)
                 } else {
                   updateLikes(currentUser, idPost)
                 }
+
               }).catch((error) => {
                 console.log('Error getting document:', error)
               })

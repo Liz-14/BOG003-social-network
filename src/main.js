@@ -8,3 +8,5 @@ window.addEventListener('hashchange', () => {
   // windo.location -> da la url actual
   router(window.location.hash)
 })
+
+
