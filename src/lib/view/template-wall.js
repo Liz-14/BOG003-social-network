@@ -67,7 +67,7 @@ export const templateWall = () => {
               </div>
 
               <div id="write">
-                <textarea id="write-post" placeholder= "¿Qué hiciste hoy?"></textarea>
+                <textarea id="write-post" class="w-post" placeholder= "¿Qué hiciste hoy?"></textarea>
                 <div id="btn-write">
                 <button type="button" id="send-post" class="btn-p">Publicar</button>
                 <button type="button" id = "exit"  class="btn-exit-write btn-exit">Salir</button>
@@ -83,22 +83,23 @@ export const templateWall = () => {
           exit()
 
           // Evento para guardar en firestore la publicacion
-          const btnPublish = container.querySelector('#send-post')
-          btnPublish.addEventListener('click', () => {
-            const writePost = document.getElementById('write-post').value
-            db.collection('muro').add({
-              petname: user.displayName,
-              post: writePost,
-              date: firebase.firestore.FieldValue.serverTimestamp(),
-              likes: []
+          const btnPublish = document.querySelectorAll('.btn-p')
+          btnPublish.forEach(el => {
+            el.addEventListener('click', () => {
+              const writePost = document.querySelectorAll('.w-post')[0].value === '' ? document.querySelectorAll('.w-post')[1].value : document.querySelectorAll('.w-post')[0].value
+              db.collection('muro').add({
+                petname: user.displayName,
+                post: writePost,
+                date: firebase.firestore.FieldValue.serverTimestamp(),
+                likes: []
+              })
+                .then((docRef) => {
+                  console.log('Document written with ID: ', docRef.id)
+                })
+                .catch((error) => {
+                  console.error('Error adding document: ', error)
+                })
             })
-              .then((docRef) => {
-                console.log('Document written with ID: ', docRef.id)
-                // db.collection('muro').orderBy('date', 'desc')
-              })
-              .catch((error) => {
-                console.error('Error adding document: ', error)
-              })
           })
         })
       })
@@ -153,7 +154,6 @@ export const templateWall = () => {
                 } else {
                   updateLikes(currentUser, idPost)
                 }
-
               }).catch((error) => {
                 console.log('Error getting document:', error)
               })
@@ -174,7 +174,7 @@ export const templateWall = () => {
                   </div>
 
                   <div id="write">
-                    <textarea id="write-post" placeholder= "¿Qué hiciste hoy?">${contentPost}</textarea>
+                    <textarea id="write-post" class="w-post" placeholder= "¿Qué hiciste hoy?">${contentPost}</textarea>
                     <div id="btn-edit-post">
                     <button type="button" id="send-edit-post" class="btn-p">Editar</button>
                     <button type="button" id="exit" class="btn-p btn-exit">Salir</button>
@@ -187,11 +187,13 @@ export const templateWall = () => {
               container.innerHTML = post
               containerPc.innerHTML = post
 
-              const aceptEdit = document.getElementById('send-edit-post')
-              aceptEdit.addEventListener('click', () => {
-                editPost(elements.dataset.id, contentPost)
+              const aceptEdit = document.querySelectorAll('.btn-p')
+              aceptEdit.forEach(el => {
+                el.addEventListener('click', () => {
+                  const contentPostEdited = document.querySelectorAll('.w-post')[0].value === contentPost ? document.querySelectorAll('.w-post')[1].value : document.querySelectorAll('.w-post')[0].value
+                  editPost(elements.dataset.id, contentPostEdited)
+                })
               })
-
               exit()
             })
           })
@@ -239,7 +241,13 @@ export const templateWall = () => {
 
       // Funcion para editar post
       const editPost = (id, post) => {
-        const writePost = document.getElementById('write-post').value
+        // Obtener el display desde el css
+        const element = document.getElementById('posts-pc')
+        const elementStyle = window.getComputedStyle(element)
+        const elementDisplay = elementStyle.getPropertyValue('display')
+
+        // Asignar el respectivo post a la coleccion
+        const writePost = elementDisplay === 'flex' ? document.querySelectorAll('.w-post')[1].value : document.querySelectorAll('.w-post')[0].value
         const collectionRef = db.collection('muro').doc(id)
 
         return collectionRef.update({
